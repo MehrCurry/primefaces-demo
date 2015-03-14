@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<InvoiceContainer>
+    <Invoice>
+        <SellerParty>
+            <Company>
+                <CompanyName>Musterfirma AG</CompanyName>
+                <RegisteredOffice>City</RegisteredOffice>
+                <Manager>Manager A, Manager B</Manager>
+                <VatId>DE12345678</VatId>
+                <TaxNumber>123/23/3563</TaxNumber>
+                <CommercialRegister>HRA 1234</CommercialRegister>
+            </Company>
+            <Address>
+                <AddressAddition>3. Stock</AddressAddition>
+                <Street>5th Avenue</Street>
+                <CountryCode>DE</CountryCode>
+                <CountryName>Deutschland</CountryName>
+                <StateCode>CA</StateCode>
+                <StateName>California</StateName>
+                <Zip>123456</Zip>
+                <City>City</City>
+            </Address>
+            <ContactData>
+                <Phone>555-12345-0</Phone>
+                <Fax>555-12345-100</Fax>
+                <Mail>info@domain.com</Mail>
+                <Web>www.domain.com</Web>
+            </ContactData>
+            <!-- Konto aus Connector Bank -->
+            <BankAccount>
+                <AccountHolder>Musterfirma AG</AccountHolder>
+                <AccountNumber>022182000</AccountNumber>
+                <BankCode>21070024</BankCode>
+                <BankName>XYZ Bank</BankName>
+                <IBAN>DE1234567891234567891</IBAN>
+                <BIC>ABCDEF12AAA</BIC>
+                <City>Banksitz</City>
+                <ConnectorClientId>2053</ConnectorClientId>
+            </BankAccount>
+        </SellerParty>
+
+        <BuyerParty>
+            <Company>
+                <CompanyName>Musterempfänger AG</CompanyName>
+                <VatId>DE23456789</VatId>
+            </Company>
+            <Person>
+                <FirstName>Michael</FirstName>
+                <LastName>Testmensch</LastName>
+                <Salutation>Herr</Salutation>
+                <Title>Dr.</Title>
+                <GenderCode>MALE</GenderCode>
+                <DateOfBirth>1980-05-30</DateOfBirth>
+            </Person>
+            <Address>
+                <AddressAddition>29. Stock</AddressAddition>
+                <Street>Versuchsstrasse 33 a</Street>
+                <CountryCode>DE</CountryCode>
+                <CountryName>Deutschland</CountryName>
+                <Zip>99999</Zip>
+                <City>Irgendwo</City>
+            </Address>
+            <ContactData>
+                <Phone>09901/9999999</Phone>
+                <Mail>michael.testmensch@gmx.de</Mail>
+            </ContactData>
+        </BuyerParty>
+
+        <ShipToParty>
+            <Company>
+                <CompanyName>Musterempfänger AG</CompanyName>
+            </Company>
+            <Person>
+                <FirstName>Michael</FirstName>
+                <LastName>Testmensch</LastName>
+            </Person>
+            <Address>
+                <Street>Versuchsstrasse 33 a</Street>
+                <CountryCode>DE</CountryCode>
+                <CountryName>Deutschland</CountryName>
+                <Zip>99999</Zip>
+                <City>Irgendwo</City>
+            </Address>
+        </ShipToParty>
+
+        <PayeeParty>
+            <BankAccount>
+                <AccountHolder>Musterfirma AG</AccountHolder>
+                <AccountNumber>XXXXX034</AccountNumber>
+                <BankCode>21070024</BankCode>
+                <BankName>XYZ Bank</BankName>
+                <IBAN>DE12345678XXXXXX123</IBAN>
+                <BIC>FEDCBA21BBB</BIC>
+            </BankAccount>
+            <CreditCard>
+                <AccountHolder>Michael Testmensch</AccountHolder>
+                <CardPan>472314XXXXXXXX1231</CardPan>
+                <ExpireYear>2014</ExpireYear>
+                <ExpireMonth>09</ExpireMonth>
+            </CreditCard>
+        </PayeeParty>
+
+        <PaymentInstructions>
+            <!-- CC,ELV,SB,WLT,... -->
+            <PaymentTypeCode>ELV</PaymentTypeCode>
+            <!-- Je nach Zahlart, individuelle Belegung. Beispiel: SEPA-Lastschrift: PaymentText1=CreditorId, PaymentText1=MandateId -->
+            <PaymentTypeName>Lastschrift</PaymentTypeName>
+            <!--
+			<PaymentText1></PaymentText1>
+            <PaymentText2></PaymentText2>
+            <PaymentText3></PaymentText3>
+			-->
+            <CreditorId>PO-654897498</CreditorId>
+            <MandateId>DE98ZZZ099999999999999999999999999</MandateId>
+            <!-- Rechtlicher Hinweis zur Zahlungabwicklung -->
+            <LegalNote></LegalNote>
+            <!-- Verwendungszeck -->
+            <PaymentReference>xyz Verwendungszweck xyz</PaymentReference>
+            <ClearingDate>2012-01-22</ClearingDate>
+        </PaymentInstructions>
+
+        <LanguageCode>de</LanguageCode>
+        <DebtorId>19333</DebtorId>
+        <DebtorReference>KD34452131</DebtorReference>
+        <InvoiceId>471125886</InvoiceId>
+        <InvoiceReference>RG52422325</InvoiceReference>
+        <PaymentProcessId>1535653</PaymentProcessId>
+        <PaymentProcessReference>REF2351313321</PaymentProcessReference>
+
+        <!-- RG = Rechnung, GT = Gutschrift -->
+        <InvoiceType>RG</InvoiceType>
+        <InvoiceDate>2012-01-15</InvoiceDate>
+        <DueDate>2012-01-19</DueDate>
+        <DeliveryStartDate>2012-01-01</DeliveryStartDate>
+        <DeliveryEndDate>2012-01-31</DeliveryEndDate>
+        <Currency>EUR</Currency>
+        <GrossAmount>60.00</GrossAmount>
+        <NetAmount>51.72</NetAmount>
+        <TaxAmount>8.28</TaxAmount>
+
+        <InvoiceItems>
+            <InvoiceItem>
+                <!-- GOODS, HANDLING, SHIPMENT, VOUCHER, SUBTOTAL -->
+                <ItemType>ARTICLE</ItemType>
+                <ArticleNumber>1564</ArticleNumber>
+                <Description1>DVD</Description1>
+                <!-- Trennung der Description Felder über Pipe Zeichen: Maximal 5 -->
+                <Description2>Jurassic Park</Description2>
+                <DeliveryStartDate>2012-01-01</DeliveryStartDate>
+                <DeliveryEndDate>2012-01-31</DeliveryEndDate>
+                <Quantity>2</Quantity>
+                <TaxRate>16</TaxRate>
+                <SingleNetAmount>0.93</SingleNetAmount>
+                <SingleGrossAmount>15.00</SingleGrossAmount>
+                <SingleTaxAmount>2.07</SingleTaxAmount>
+                <NetAmount>25.86</NetAmount>
+                <GrossAmount>30.00</GrossAmount>
+                <TaxAmount>4.14</TaxAmount>
+            </InvoiceItem>
+            <InvoiceItem>
+                <ItemType>SUBTOTAL</ItemType>
+                <Description1>Summe DVDs FSK 12</Description1>
+                <GrossAmount>30.00</GrossAmount>
+                <NetAmount>25.86</NetAmount>
+            </InvoiceItem>
+            <InvoiceItem>
+                <ItemType>ARTICLE</ItemType>
+                <ArticleNumber>64564</ArticleNumber>
+                <Description1>DVD</Description1>
+                <Description2>Donaudampfschifffahrtselektrizitätenhauptbetriebswerkbauunterbeamtengesellschaft</Description2>
+                <DeliveryStartDate>2012-01-01</DeliveryStartDate>
+                <DeliveryEndDate>2012-01-31</DeliveryEndDate>
+                <Quantity>2</Quantity>
+                <TaxRate>7</TaxRate>
+                <SingleNetAmount>12.93</SingleNetAmount>
+                <SingleGrossAmount>15.00</SingleGrossAmount>
+                <SingleTaxAmount>2.07</SingleTaxAmount>
+                <NetAmount>25.86</NetAmount>
+                <GrossAmount>30.00</GrossAmount>
+                <TaxAmount>4.14</TaxAmount>
+            </InvoiceItem>
+            <InvoiceItem>
+                <ItemType>SUBTOTAL</ItemType>
+                <Description1>Summe DVDs FSK 18</Description1>
+                <GrossAmount>30.00</GrossAmount>
+                <NetAmount>27.90</NetAmount>
+            </InvoiceItem>
+        </InvoiceItems>
+
+        <InvoiceTaxItems>
+            <InvoiceTaxItem>
+                <TaxRate>16</TaxRate>
+                <TaxAmount>8.28</TaxAmount>
+            </InvoiceTaxItem>
+            <InvoiceTaxItem>
+                <TaxRate>7</TaxRate>
+                <TaxAmount>2.10</TaxAmount>
+            </InvoiceTaxItem>
+        </InvoiceTaxItems>
+
+        <!-- Trennung der Appendix Felder über Pipe Zeichen: Maximal 5 -->
+        <Appendix1>appendix1 Beispiel: Auftragsnummer 3253273</Appendix1>
+        <Appendix2>appendix2 Beispiel: Shop www.kauf.de</Appendix2>
+        <Appendix3>appendix3 Beispiel: Vielen Dank</Appendix3>
+        <Appendix4>appendix4 Beispiel: Mit freundlichen  Grüßen</Appendix4>
+        <Appendix5>appendix5 Beispiel: XYZ123</Appendix5>
+
+    </Invoice>
+
+</InvoiceContainer>
