@@ -23,4 +23,8 @@ public class AssetService {
     public Collection<Asset> findAll() {
         return repository.findAll();
     }
+
+    public void save(Asset asset) {
+        repository.save(asset);
+    }
 }

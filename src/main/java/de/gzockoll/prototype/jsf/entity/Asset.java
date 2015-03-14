@@ -84,4 +84,8 @@ public class Asset extends AbstractEntity {
     public long sizeInKB() {
         return getSize()/1024L;
     }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
 }
