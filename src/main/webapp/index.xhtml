@@ -1,48 +1,46 @@
 <f:view xmlns="http://www.w3c.org/1999/xhtml"
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-        <title>Test</title>
-        <style>
-            body {font-size:12px; }
-        </style>
-    </h:head>
     <h:body>
-        <h:form>
-            <p:panel header="What do you see here?" >
-                <div style="height:50px">
-                    This is a simple PrimeFaces 5 project running on Spring Boot 1.1.4.
-                </div>
-            </p:panel>
-            <p:panel header="JSF 2.2 Bean Access">
-                #{helloBean.time()}
-            </p:panel>
-        </h:form>
-    </h:body>
-    <h:form id="form">
-    <p:growl id="msgs" showDetail="true"/>
-    <p:dataTable var="asset" value="#{assetBean.assets}" editable="true" editMode="cell" selectionMode="single" selection="#{assetBean.selectedAsset}" rowKey="#{asset.id}">
-        <p:ajax event="cellEdit" listener="#{assetBean.onCellEdit}" update=":form:msgs" />
+        <ui:composition template="template/main.xhtml"/>
+        <ui:define name="content">
+            <h1 class="page-header "><i class="fa fa-tachometer"></i> Dashboard</h1>
+            <h:form>
+                <p:panel header="What do you see here?">
+                    <div style="height:50px">
+                        This is a simple PrimeFaces 5 project running on Spring Boot 1.1.4.
+                    </div>
+                </p:panel>
+                <p:panel header="JSF 2.2 Bean Access">
+                    #{helloBean.time()}
+                </p:panel>
+            </h:form>
+            <h:form id="form">
+                <p:growl id="msgs" showDetail="true"/>
+                <p:dataTable var="asset" value="#{assetBean.assets}" editable="true" editMode="cell"
+                             selectionMode="single" selection="#{assetBean.selectedAsset}" rowKey="#{asset.id}">
+                    <p:ajax event="cellEdit" listener="#{assetBean.onCellEdit}" update=":form:msgs"/>
 
-        <p:column headerText="Name">
-            <p:cellEditor>
-                <f:facet name="output">
-                    <h:outputText value="#{asset.filename}" />
-                </f:facet>
-                <f:facet name="input">
-                    <h:inputText value="#{asset.filename}"/>
-                </f:facet>
-            </p:cellEditor>
-        </p:column>
-        <p:column headerText="Mime Type">
-            <h:outputText value="#{asset.mimeType}" />
-        </p:column>
-        <p:column headerText="Size">
-            <h:outputText value="#{asset.sizeInKB()} KB" />
-        </p:column>
-    </p:dataTable>
-    </h:form>
+                    <p:column headerText="Name">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{asset.filename}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{asset.filename}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Mime Type">
+                        <h:outputText value="#{asset.mimeType}"/>
+                    </p:column>
+                    <p:column headerText="Size">
+                        <h:outputText value="#{asset.sizeInKB()} KB"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </ui:define>
+    </h:body>
 </f:view>
