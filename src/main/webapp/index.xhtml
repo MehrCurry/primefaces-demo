@@ -1,9 +1,7 @@
 <f:view xmlns="http://www.w3c.org/1999/xhtml"
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:ui="http://java.sun.com/jsf/facelets"
-        xmlns:ng="http://xmlns.jcp.org/jsf/passthrough"
-        xmlns:prime="http://primefaces.org/ui">
+        xmlns:p="http://primefaces.org/ui">
     <h:head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -14,14 +12,25 @@
     </h:head>
     <h:body>
         <h:form>
-            <prime:panel header="What do you see here?" >
+            <p:panel header="What do you see here?" >
                 <div style="height:50px">
                     This is a simple PrimeFaces 5 project running on Spring Boot 1.1.4.
                 </div>
-            </prime:panel>
-            <prime:panel header="JSF 2.2 Bean Access">
+            </p:panel>
+            <p:panel header="JSF 2.2 Bean Access">
                 #{helloBean.time()}
-            </prime:panel>
+            </p:panel>
         </h:form>
     </h:body>
+    <p:dataTable var="asset" value="#{assetBean.refresh()}">
+        <p:column headerText="Name">
+            <h:outputText value="#{asset.filename}" />
+        </p:column>
+        <p:column headerText="Mime Type">
+            <h:outputText value="#{asset.mimeType}" />
+        </p:column>
+        <p:column headerText="Size">
+            <h:outputText value="#{asset.sizeInKB()} KB" />
+        </p:column>
+    </p:dataTable>
 </f:view>

@@ -80,4 +80,8 @@ public class Asset extends AbstractEntity {
     public InputStream asByteStream() {
         return new ByteArrayInputStream(data);
     }
+
+    public long sizeInKB() {
+        return getSize()/1024L;
+    }
 }

@@ -19,4 +19,8 @@ public class AssetService {
     public Collection<? extends Asset> findByMimeType(String s) {
         return repository.findByMimeType(s);
     }
+
+    public Collection<Asset> findAll() {
+        return repository.findAll();
+    }
 }
