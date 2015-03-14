@@ -4,7 +4,7 @@
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
     <h:body>
-        <ui:composition template="template/main.xhtml"/>
+        <ui:composition template="template/main.xhtml">
         <ui:define name="content">
             <h1 class="page-header "><i class="fa fa-tachometer"></i> Dashboard</h1>
             <h:form>
@@ -42,5 +42,6 @@
                 </p:dataTable>
             </h:form>
         </ui:define>
+        </ui:composition>
     </h:body>
 </f:view>
