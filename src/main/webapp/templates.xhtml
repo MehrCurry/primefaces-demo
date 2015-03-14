@@ -1,0 +1,35 @@
+<f:view xmlns="http://www.w3c.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="template/main.xhtml">
+        <ui:define name="content">
+            <h1 class="page-header "><i class="fa fa-file-code-o"></i> Templates</h1>
+            <h:form id="form">
+                <p:contextMenu for="templates">
+                    <p:menuitem value="Preview" update="templates" icon="ui-icon-view" actionListener="#{templatesBean.previewTemplate}"/>
+                    <p:menuitem value="Delete" update="templates" icon="ui-icon-close" actionListener="#{templatesBean.deleteTemplate}"/>
+                </p:contextMenu>
+                <p:growl id="msgs" showDetail="true"/>
+                <p:dataTable id="templates" var="template" value="#{templatesBean.templates}" editable="true" editMode="cell"
+                             selectionMode="single" selection="#{templatesBean.selected}" rowKey="#{template.id}">
+                    <p:ajax event="cellEdit" listener="#{templatesBean.onCellEdit}" update=":form:msgs"/>
+
+                    <p:column headerText="Language">
+                        <h:outputText value="#{template.languageCode}"/>
+                    </p:column>
+                    <p:column headerText="Transformer">
+                        <h:outputText value="#{template.transform}"/>
+                    </p:column>
+                    <p:column headerText="Stationery">
+                        <h:outputText value="#{template.stationery} KB"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+            <p:commandButton value="Add" id="add" actionListener="#{templatsBean.add()}"/>
+        </ui:define>
+        </ui:composition>
+    </h:body>
+</f:view>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Preview</title>
+</h:head>
+
+<h:body>
+    <h3>PDF</h3>
+    <p:media id="preview" value="#{templatesBean.getMedia()}" width="100%" height="100%" player="pdf"/>
+    <p:resizable for="preview"/>
+</h:body>
+
+</html>

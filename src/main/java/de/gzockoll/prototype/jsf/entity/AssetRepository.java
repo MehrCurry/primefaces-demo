@@ -8,4 +8,6 @@ import java.util.Collection;
 @Repository
 public interface AssetRepository extends JpaRepository<Asset,Long> {
     Collection<? extends Asset> findByMimeType(String s);
+
+    Asset findByFilename(String s);
 }

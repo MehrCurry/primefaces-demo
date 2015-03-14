@@ -92,4 +92,8 @@ public class TemplateService {
     public void delete(Template t) {
         repository.delete(t);
     }
+
+    public Collection<Template> findAll() {
+        return repository.findAll();
+    }
 }

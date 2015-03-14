@@ -17,30 +17,6 @@
                     #{helloBean.time()}
                 </p:panel>
             </h:form>
-            <h:form id="form">
-                <p:growl id="msgs" showDetail="true"/>
-                <p:dataTable var="asset" value="#{assetBean.assets}" editable="true" editMode="cell"
-                             selectionMode="single" selection="#{assetBean.selectedAsset}" rowKey="#{asset.id}">
-                    <p:ajax event="cellEdit" listener="#{assetBean.onCellEdit}" update=":form:msgs"/>
-
-                    <p:column headerText="Name">
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <h:outputText value="#{asset.filename}"/>
-                            </f:facet>
-                            <f:facet name="input">
-                                <h:inputText value="#{asset.filename}"/>
-                            </f:facet>
-                        </p:cellEditor>
-                    </p:column>
-                    <p:column headerText="Mime Type">
-                        <h:outputText value="#{asset.mimeType}"/>
-                    </p:column>
-                    <p:column headerText="Size">
-                        <h:outputText value="#{asset.sizeInKB()} KB"/>
-                    </p:column>
-                </p:dataTable>
-            </h:form>
         </ui:define>
         </ui:composition>
     </h:body>
