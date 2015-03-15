@@ -31,8 +31,10 @@ public class TemplatesBean implements Serializable {
     @Inject
     private AssetRepository assets;
 
-    @Setter
     private Template selected;
+
+    @Getter @Setter
+    private Template element;
 
     private Collection<Template> templates=null;
 
@@ -41,12 +43,16 @@ public class TemplatesBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        selected=new Template("us");
+        element=new Template("us");
         templates=service.findAll();
     }
 
     public Template getSelected() {
         return selected;
+    }
+
+    public void setSelected(Template selected) {
+        this.selected = selected;
     }
 
     public void onCellEdit(CellEditEvent event) {
@@ -88,7 +94,11 @@ public class TemplatesBean implements Serializable {
     }
 
     public String reinit() {
-        selected=new Template();
+        if (element!=null) {
+            element=service.save(element);
+        } else {
+            element=new Template();
+        }
         return null;
     }
 }

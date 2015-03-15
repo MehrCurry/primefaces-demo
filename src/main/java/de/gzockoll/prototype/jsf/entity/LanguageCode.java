@@ -23,4 +23,8 @@ public class LanguageCode extends ValidateableObject {
     public LanguageCode(@ValidISOLanguageCode String code) {
         this.code = code;
     }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 }

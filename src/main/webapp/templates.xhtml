@@ -12,16 +12,15 @@
                     <p:panel header="Neues Template anlegen" style="margin-bottom:20px">
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputLabel value="Sprache : *" for="language"/>
-                            <p:inputText id="language" label="Language" value="#{templatesBean.selected.languageCode}"/>
-
+                            <p:inputText id="language" label="Language" value="#{templatesBean.element.languageCode.code}" />
                             <h:outputLabel value="Status :" for="state"/>
                             <p:inputText id="state" label="Status" readonly="true"
-                                         value="#{templatesBean.selected.state}"/>
+                                         value="#{templatesBean.element.state}"/>
                             <p:commandButton id="btn_reset" value="Reset" type="reset"/>
-                            <p:commandButton id="btn_add" value="Add" update="list msgs @parent"
+                            <p:commandButton id="btn_add" value="Add" update="list"
                                              action="#{templatesBean.reinit}">
-                                <p:collector value="#{templatesBean.selected}" addTo="#{templatesBean.templates}"
-                                             unique="true"/>
+                                <p:collector value="#{templatesBean.element}" addTo="#{templatesBean.templates}"
+                                             unique="true" />
                             </p:commandButton>
                         </h:panelGrid>
                     </p:panel>

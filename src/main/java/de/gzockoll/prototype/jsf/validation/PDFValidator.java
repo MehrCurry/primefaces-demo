@@ -23,7 +23,7 @@ public class PDFValidator implements ConstraintValidator<PDFDocument,Asset> {
     @Override
     public boolean isValid(Asset asset, ConstraintValidatorContext constraintValidatorContext) {
         if (asset==null) {
-            return false;
+            return true;
         }
         try {
             PDDocument doc=PDDocument.load(asset.asByteStream());

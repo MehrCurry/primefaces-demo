@@ -41,12 +41,12 @@ public class Template extends AbstractEntity {
     private LanguageCode languageCode = new LanguageCode();
 
     @OneToOne
-    @NotNull
+    // @NotNull
     @Setter
     private Asset transform;
 
     @ManyToOne
-    @NotNull
+    // @NotNull
     @PDFDocument
     @Setter
     private Asset stationery;
