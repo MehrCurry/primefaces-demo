@@ -31,6 +31,10 @@
                     </p:column>
                 </p:dataTable>
             </h:form>
+            <h:form enctype="multipart/form-data">
+                <p:fileUpload value="#{assetBean.file}" mode="simple" skinSimple="true" sizeLimit="2000000"/>
+                <p:commandButton value="Submit" ajax="false" actionListener="#{assetBean.upload}" />
+            </h:form>
         </ui:define>
         </ui:composition>
     </h:body>

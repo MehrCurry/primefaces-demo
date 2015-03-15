@@ -5,31 +5,62 @@
         xmlns:p="http://primefaces.org/ui">
     <h:body>
         <ui:composition template="template/main.xhtml">
-        <ui:define name="content">
-            <h1 class="page-header "><i class="fa fa-file-code-o"></i> Templates</h1>
-            <h:form id="form">
-                <p:contextMenu for="templates">
-                    <p:menuitem value="Preview" update="templates" icon="ui-icon-view" actionListener="#{templatesBean.previewTemplate}"/>
-                    <p:menuitem value="Delete" update="templates" icon="ui-icon-close" actionListener="#{templatesBean.deleteTemplate}"/>
-                </p:contextMenu>
-                <p:growl id="msgs" showDetail="true"/>
-                <p:dataTable id="templates" var="template" value="#{templatesBean.templates}" editable="true" editMode="cell"
-                             selectionMode="single" selection="#{templatesBean.selected}" rowKey="#{template.id}">
-                    <p:ajax event="cellEdit" listener="#{templatesBean.onCellEdit}" update=":form:msgs"/>
+            <ui:define name="content">
+                <h1 class="page-header "><i class="fa fa-file-code-o"></i> Templates</h1>
+                <h:form id="form">
+                    <p:growl id="msgs"/>
+                    <p:panel header="Neues Template anlegen" style="margin-bottom:20px">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel value="Sprache : *" for="language"/>
+                            <p:inputText id="language" label="Language" value="#{templatesBean.selected.languageCode}"/>
 
-                    <p:column headerText="Language">
-                        <h:outputText value="#{template.languageCode}"/>
-                    </p:column>
-                    <p:column headerText="Transformer">
-                        <h:outputText value="#{template.transform}"/>
-                    </p:column>
-                    <p:column headerText="Stationery">
-                        <h:outputText value="#{template.stationery} KB"/>
-                    </p:column>
-                </p:dataTable>
-            </h:form>
-            <p:commandButton value="Add" id="add" actionListener="#{templatsBean.add()}"/>
-        </ui:define>
+                            <h:outputLabel value="Status :" for="state"/>
+                            <p:inputText id="state" label="Status" readonly="true"
+                                         value="#{templatesBean.selected.state}"/>
+                            <p:commandButton id="btn_reset" value="Reset" type="reset"/>
+                            <p:commandButton id="btn_add" value="Add" update="list msgs @parent"
+                                             action="#{templatesBean.reinit}">
+                                <p:collector value="#{templatesBean.selected}" addTo="#{templatesBean.templates}"
+                                             unique="true"/>
+                            </p:commandButton>
+                        </h:panelGrid>
+                    </p:panel>
+                    <p:outputPanel id="list">
+                        <p:contextMenu for="templates">
+                            <p:menuitem value="Preview" update="templates" icon="ui-icon-view"
+                                        actionListener="#{templatesBean.previewTemplate}"/>
+                            <p:menuitem value="Delete" update="templates" icon="ui-icon-close"
+                                        actionListener="#{templatesBean.deleteTemplate}" onsuccess="#{preview.show()}"/>
+                        </p:contextMenu>
+                        <p:dataTable id="templates" var="template" value="#{templatesBean.templates}" editable="true"
+                                     editMode="cell"
+                                     selectionMode="single" selection="#{templatesBean.selected}"
+                                     rowKey="#{template.id}">
+                            <p:ajax event="cellEdit" listener="#{templatesBean.onCellEdit}" update=":form:msgs"/>
+
+                            <p:column headerText="Language">
+                                <h:outputText value="#{template.languageCode}"/>
+                            </p:column>
+                            <p:column headerText="Transformer">
+                                <h:outputText value="#{template.transform}"/>
+                            </p:column>
+                            <p:column headerText="Stationery">
+                                <h:outputText value="#{template.stationery}"/>
+                            </p:column>
+                            <p:column headerText="Status">
+                                <h:outputText value="#{template.state.toString().toLowerCase()}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:outputPanel>
+                </h:form>
+                <p:lightBox id="preview" widgetVar="preview">
+                    <h:outputLink value="#">Preview</h:outputLink>
+                    <f:facet name="inline">
+                        <p:media value="#{templatesBean.getMedia()}" width="900" height="800"
+                                 player="pdf"/>
+                    </f:facet>
+                </p:lightBox>
+            </ui:define>
         </ui:composition>
     </h:body>
 </f:view>

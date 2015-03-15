@@ -17,25 +17,24 @@ import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Map;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 @Transactional
 @Controller
 @Slf4j
 public class TemplateService {
 
+    @EndpointInject(uri = "direct:xml2pdf")
+    ProducerTemplate producer;
+    @EndpointInject(uri = "direct:preview2pdf")
+    ProducerTemplate previewProducer;
     @Autowired
     private TemplateRepository repository;
-
     @Autowired
     private TemplateGroupRepository groupRepository;
 
-    @EndpointInject(uri="direct:xml2pdf")
-    ProducerTemplate producer;
-
-    @EndpointInject(uri="direct:preview2pdf")
-    ProducerTemplate previewProducer;
-
     public void requestApproval(long templateId) {
-        Template t=repository.findOne(templateId);
+        Template t = repository.findOne(templateId);
         t.requestApproval();
         repository.save(t);
     }
@@ -44,8 +43,8 @@ public class TemplateService {
         repository.save(t);
         TemplateGroupPK pk = new TemplateGroupPK(tenantId, new LanguageCode(language), qualifier);
         TemplateGroup group = groupRepository.findOne(pk);
-        if (group==null) {
-            group=new TemplateGroup(tenantId,language, qualifier);
+        if (group == null) {
+            group = new TemplateGroup(tenantId, language, qualifier);
         }
 
         group.addTemplate(t);
@@ -55,19 +54,23 @@ public class TemplateService {
     public void updateTemplate(Template t) {
         repository.save(t);
     }
+
     public byte[] generate(Template t) {
+        checkArgument(t != null);
         return t.generate(producer);
     }
+
     public byte[] preview(Template t) {
+        checkArgument(t != null);
         return t.preview(producer);
     }
 
-    public byte[] preview(String xslt,Asset stationery) {
-        Path tmpFile=null;
+    public byte[] preview(String xslt, Asset stationery) {
+        Path tmpFile = null;
         try {
             String data = new String(Files.readAllBytes(Paths.get("camel/vorlage/dataset.xml")), Charset.forName("UTF-8"));
             tmpFile = Files.createTempFile("tm", ".xslt");
-            Files.write(tmpFile,xslt.getBytes());
+            Files.write(tmpFile, xslt.getBytes());
             final Map<String, Object> headers = ImmutableMap.<String, Object>builder()
                     .put("tmpFile", tmpFile.toFile().getCanonicalPath())
                     .put("stationeryId", stationery.getId())
@@ -76,7 +79,7 @@ public class TemplateService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
-            if (tmpFile!=null)
+            if (tmpFile != null)
                 tmpFile.toFile().delete();
         }
     }

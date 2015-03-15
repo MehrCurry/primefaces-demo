@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.event.CellEditEvent;
+import org.primefaces.model.UploadedFile;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.ManagedBean;
@@ -26,8 +27,15 @@ public class AssetBean {
     @Getter @Setter
     private Asset selectedAsset;
 
+    @Getter @Setter
+    private UploadedFile file;
+
     private Collection<Asset> assets=null;
 
+    public void upload() {
+        Asset asset=new Asset(file.getContents(),file.getFileName());
+        service.save(asset);
+    }
 
     public void onCellEdit(CellEditEvent event) {
         Object oldValue = event.getOldValue();
