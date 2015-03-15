@@ -96,9 +96,8 @@ public class TemplatesBean implements Serializable {
     public String reinit() {
         if (element!=null) {
             element=service.save(element);
-        } else {
-            element=new Template();
         }
+        element=new Template();
         return null;
     }
 }
