@@ -2,7 +2,8 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:ui="http://java.sun.com/jsf/facelets"
-        xmlns:p="http://primefaces.org/ui">
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
     <h:body>
         <ui:composition template="template/main.xhtml">
             <ui:define name="content">
@@ -34,10 +35,10 @@
                     </p:panel>
                     <p:outputPanel id="list">
                         <p:contextMenu for="templates">
-                            <p:menuitem value="Preview" update="templates" icon="ui-icon-view"
-                                        actionListener="#{templatesBean.previewTemplate}"  onsuccess="#{preview.show()}"/>
+                            <p:menuitem value="Preview" icon="ui-icon-view"
+                                        action="#{templatesBean.previewTemplate}" oncomplete="preview.show()" update=":preview"/>
                             <p:menuitem value="Edit" update="templates" icon="ui-icon-edit"
-                                        actionListener="#{templatesBean.editTemplate}"/>
+                                        actionListener="#{templatesBean.editTemplate}" />
                             <p:menuitem value="Delete" update="templates" icon="ui-icon-close"
                                         actionListener="#{templatesBean.deleteTemplate}"/>
                         </p:contextMenu>
@@ -62,13 +63,9 @@
                         </p:dataTable>
                     </p:outputPanel>
                 </h:form>
-                <p:lightBox id="preview" widgetVar="preview">
-                    <h:outputLink value="#">Preview</h:outputLink>
-                    <f:facet name="inline">
-                        <p:media value="#{templatesBean.getMedia()}" width="900" height="800"
-                                 player="pdf"/>
-                    </f:facet>
-                </p:lightBox>
+                <p:dialog id="preview" header="Prevew" widgetVar="preview" minHeight="40" resizable="true" >
+                    <p:media  value="#{templatesBean.getMedia()}" width="900" height="600" player="pdf"/>
+                </p:dialog>
             </ui:define>
         </ui:composition>
     </h:body>

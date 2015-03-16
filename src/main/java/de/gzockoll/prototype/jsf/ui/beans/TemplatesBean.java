@@ -7,6 +7,7 @@ import de.gzockoll.prototype.jsf.entity.Template;
 import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.component.datatable.DataTable;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.springframework.stereotype.Component;
@@ -110,6 +111,7 @@ public class TemplatesBean implements Serializable {
         if (selected!=null) {
             byte[] data = service.preview(selected);
             media=new DefaultStreamedContent(new ByteArrayInputStream(data), "application/pdf");
+            // showDialog();
             return media;
         } else
             return null;
@@ -127,5 +129,10 @@ public class TemplatesBean implements Serializable {
         }
         element=new Template();
         return null;
+    }
+
+    public void showDialog() {
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('preview').show();");
     }
 }
