@@ -1,6 +1,7 @@
 package de.gzockoll.prototype.jsf.ui.beans;
 
 import de.gzockoll.prototype.jsf.control.TemplateService;
+import de.gzockoll.prototype.jsf.entity.Asset;
 import de.gzockoll.prototype.jsf.entity.AssetRepository;
 import de.gzockoll.prototype.jsf.entity.Template;
 import lombok.Getter;
@@ -38,8 +39,17 @@ public class TemplatesBean implements Serializable {
 
     private Collection<Template> templates=null;
 
-    @Getter
     private DefaultStreamedContent media;
+
+    private Collection<? extends Asset> transformers;
+
+    private Collection<? extends Asset> stationeries;
+
+    @Getter @Setter
+    private Long transformId;
+
+    @Getter @Setter
+    private Long stationeryId;
 
     @PostConstruct
     public void init() {
@@ -71,6 +81,14 @@ public class TemplatesBean implements Serializable {
         return templates;
     }
 
+    public Collection<? extends Asset> getTransformers() {
+        return assets.findByMimeType("application/xslt+xml");
+    }
+
+    public Collection<? extends Asset> getStationeries() {
+        return assets.findByMimeType("application/pdf");
+    }
+
     public void addMessage(String msg) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg,  null);
         FacesContext.getCurrentInstance().addMessage(null, message);
@@ -93,9 +111,15 @@ public class TemplatesBean implements Serializable {
             return null;
     }
 
+    public DefaultStreamedContent getMedia() {
+        return media;
+    }
+
     public String reinit() {
         if (element!=null) {
+            element.assignTransform(assets.findOne(transformId)).assignStationary(assets.findOne(stationeryId));
             element=service.save(element);
+            addMessage("Saved");
         }
         element=new Template();
         return null;

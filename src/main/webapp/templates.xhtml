@@ -16,6 +16,14 @@
                             <h:outputLabel value="Status :" for="state"/>
                             <p:inputText id="state" label="Status" readonly="true"
                                          value="#{templatesBean.element.state}"/>
+                            <h:outputLabel value="Transform : *" for="transform"/>
+                            <p:selectOneMenu id="transform" value="#{templatesBean.transformId}">
+                                <f:selectItems value="#{templatesBean.transformers}" var="t" itemLabel="#{t.filename}" itemValue="#{t.id}"/>
+                            </p:selectOneMenu>
+                            <h:outputLabel value="Stationery : *" for="stationery"/>
+                            <p:selectOneMenu id="stationery"  value="#{templatesBean.stationeryId}">
+                                <f:selectItems value="#{templatesBean.stationeries}" var="t" itemLabel="#{t.filename}" itemValue="#{t.id}"/>
+                            </p:selectOneMenu>
                             <p:commandButton id="btn_reset" value="Reset" type="reset"/>
                             <p:commandButton id="btn_add" value="Add" update="list edit"
                                              action="#{templatesBean.reinit}">
