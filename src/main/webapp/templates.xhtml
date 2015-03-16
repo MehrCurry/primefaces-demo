@@ -35,9 +35,11 @@
                     <p:outputPanel id="list">
                         <p:contextMenu for="templates">
                             <p:menuitem value="Preview" update="templates" icon="ui-icon-view"
-                                        actionListener="#{templatesBean.previewTemplate}"/>
+                                        actionListener="#{templatesBean.previewTemplate}"  onsuccess="#{preview.show()}"/>
+                            <p:menuitem value="Edit" update="templates" icon="ui-icon-edit"
+                                        actionListener="#{templatesBean.editTemplate}"/>
                             <p:menuitem value="Delete" update="templates" icon="ui-icon-close"
-                                        actionListener="#{templatesBean.deleteTemplate}" onsuccess="#{preview.show()}"/>
+                                        actionListener="#{templatesBean.deleteTemplate}"/>
                         </p:contextMenu>
                         <p:dataTable id="templates" var="template" value="#{templatesBean.templates}" editable="true"
                                      editMode="cell"

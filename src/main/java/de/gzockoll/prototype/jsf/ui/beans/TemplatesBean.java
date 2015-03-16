@@ -102,6 +102,10 @@ public class TemplatesBean implements Serializable {
         }
     }
 
+    public String editTemplate() {
+        return "edit";
+    }
+
     public DefaultStreamedContent previewTemplate() {
         if (selected!=null) {
             byte[] data = service.preview(selected);
