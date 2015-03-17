@@ -36,12 +36,12 @@
                     <p:outputPanel id="list">
                         <p:contextMenu for="templates">
                             <p:menuitem value="Preview" icon="ui-icon-view"
-                                        action="#{templatesBean.previewTemplate}" oncomplete="preview.show()"
-                                        update=":preview :docviewer"/>
+                                        action="#{templatesBean.previewTemplate}"
+                                        update=":media"/>
                             <p:menuitem value="Edit" update="templates" icon="ui-icon-edit"
-                                        actionListener="#{templatesBean.editTemplate}" />
+                                        action="#{templatesBean.editTemplate}" />
                             <p:menuitem value="Delete" update="templates" icon="ui-icon-close"
-                                        actionListener="#{templatesBean.deleteTemplate}"/>
+                                        action="#{templatesBean.deleteTemplate}"/>
                         </p:contextMenu>
                         <p:dataTable id="templates" var="template" value="#{templatesBean.templates}" editable="true"
                                      editMode="cell"
@@ -65,7 +65,11 @@
                     </p:outputPanel>
                 </h:form>
                 <p:dialog id="preview" header="Prevew" widgetVar="preview" minHeight="40" resizable="true" >
-                    <pe:documentViewer id="docviewer" width="900" height="500" value="#{templatesBean.getMedia()}"/>
+                    <!--
+                    <p:media id="media2" value="#{templatesBean.getMedia()}" width="900" height="500" player="pdf"/>
+                    -->
+                    <pe:documentViewer id="media" width="900" height="500" value="#{templatesBean.getMedia()}"/>
+
                 </p:dialog>
             </ui:define>
         </ui:composition>

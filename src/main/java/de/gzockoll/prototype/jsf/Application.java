@@ -64,6 +64,7 @@ public class Application extends SpringBootServletInitializer implements Servlet
         FilterRegistrationBean bean=new FilterRegistrationBean();
         FileUploadFilter uploadFilter=new FileUploadFilter();
         bean.setFilter(uploadFilter);
+        bean.addServletRegistrationBeans(facesServletRegistration());
         bean.setOrder(1);
         return bean;
     }
