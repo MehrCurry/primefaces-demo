@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
       xmlns:pe="http://primefaces.org/ui/extensions">
 
 <h:head>
@@ -9,10 +8,7 @@
 </h:head>
 
 <h:body>
-    <h3>PDF</h3>
-    <p:media id="preview" value="#{templatesBean.getMedia()}" width="400" height="600" player="pdf"/>
-    <pe:documentViewer id="pdfViewer" value="#{templatesBean.getMedia()}" />
-    <p:resizable for="preview"/>
+    <pe:documentViewer id="docviewer" width="900" value="#{templatesBean.getMedia()}"/>
 </h:body>
 
 </html>

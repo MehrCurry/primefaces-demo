@@ -111,7 +111,7 @@ public class TemplatesBean implements Serializable {
         if (selected!=null) {
             byte[] data = service.preview(selected);
             media=new DefaultStreamedContent(new ByteArrayInputStream(data), "application/pdf");
-            // showDialog();
+            showDialog();
             return media;
         } else
             return null;
@@ -134,5 +134,7 @@ public class TemplatesBean implements Serializable {
     public void showDialog() {
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("PF('preview').show();");
+
+        // RequestContext.getCurrentInstance().openDialog("viewPDF");
     }
 }
