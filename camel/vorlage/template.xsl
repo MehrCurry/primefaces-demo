@@ -233,10 +233,10 @@
         <!-- fo Document starts here -->
         <fo:root>
             <fo:layout-master-set>
-                <fo:simple-page-master master-name="first-page" page-width="210mm" page-height="297mm" margin-left="23mm" margin-right="23mm" margin-bottom="3mm" margin-top="5mm">
-                    <fo:region-body margin-bottom="20mm" margin-top="44mm"/>
+                <fo:simple-page-master master-name="first-page" page-width="210mm" page-height="297mm" margin-left="25mm" margin-right="20mm" margin-bottom="3mm" margin-top="5mm">
+                    <fo:region-body margin-bottom="30mm" margin-top="50mm"/>
                     <fo:region-before extent="40mm"/>
-                    <fo:region-after extent="20mm"/>
+                    <fo:region-after extent="30mm"/>
                 </fo:simple-page-master>
             </fo:layout-master-set>
 
@@ -260,7 +260,7 @@
                 </fo:static-content>
 
                 <!-- Footer, probably unused because of stationery (letter paper) -->
-                <fo:static-content flow-name="xsl-region-after" font-family="Helvetica" font-size="7pt">
+                <fo:static-content flow-name="xsl-region-after" font-family="Arial" font-size="7pt">
                     <fo:table table-layout="fixed" width="100%" border-spacing="0pt">
                         <fo:table-column column-width="33%"/>
                         <fo:table-column column-width="34%"/>
@@ -341,7 +341,7 @@
                 </fo:static-content>
 
                 <!-- body -->
-                <fo:flow flow-name="xsl-region-body" font-family="Helvetica" font-size="10pt">
+                <fo:flow flow-name="xsl-region-body" font-family="Arial" font-size="10pt">
                     <fo:block>
                         <fo:table table-layout="fixed" width="100%" border-spacing="0mm">
                             <fo:table-column column-width="60%"/>

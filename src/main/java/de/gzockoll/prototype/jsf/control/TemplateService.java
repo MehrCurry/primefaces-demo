@@ -68,7 +68,7 @@ public class TemplateService {
     public byte[] preview(String xslt, Asset stationery) {
         Path tmpFile = null;
         try {
-            String data = new String(Files.readAllBytes(Paths.get("camel/vorlage/dataset.xml")), Charset.forName("UTF-8"));
+            String data = new String(Files.readAllBytes(Paths.get("camel/vorlage/long-dataset.xml")), Charset.forName("UTF-8"));
             tmpFile = Files.createTempFile("tm", ".xslt");
             Files.write(tmpFile, xslt.getBytes());
             final Map<String, Object> headers = ImmutableMap.<String, Object>builder()
