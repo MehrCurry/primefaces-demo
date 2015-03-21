@@ -9,16 +9,14 @@ import java.util.Locale;
 
 public class ISOLanguageCodeValidator implements ConstraintValidator<ValidISOLanguageCode,String> {
     public static final HashSet<String> VALID_LANGUAGES = Sets.newHashSet(Locale.getISOLanguages());
-    private boolean nullIsValid;
 
     @Override
     public void initialize(ValidISOLanguageCode validISOLanguageCode) {
-        this.nullIsValid=validISOLanguageCode.allowNull();
     }
 
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
-        return (s==null && nullIsValid) || VALID_LANGUAGES.contains(s);
+        return s==null || VALID_LANGUAGES.contains(s);
     }
 
     boolean isValid(String s) {

@@ -13,6 +13,4 @@ public @interface ValidISOLanguageCode {
     Class[] groups() default {};
 
     Class[] payload() default {};
-
-    boolean allowNull() default false;
 }

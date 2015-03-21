@@ -18,9 +18,11 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.validation.ConstraintViolationException;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Collections;
 
 @ManagedBean
 @Component
@@ -38,11 +40,12 @@ public class TemplatesBean implements Serializable {
     @Getter @Setter
     private Template element;
 
-    private Collection<Template> templates=null;
+    private Collection<Template> templates= Collections.EMPTY_LIST;
 
     private DefaultStreamedContent media;
 
-    private Collection<? extends Asset> transformers;
+    @Getter @Setter
+    private String transform="...";
 
     private Collection<? extends Asset> stationeries;
 
@@ -54,7 +57,7 @@ public class TemplatesBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        element=new Template("us");
+        element=new Template();
         templates=service.findAll();
     }
 
@@ -80,10 +83,6 @@ public class TemplatesBean implements Serializable {
 
     public Collection<Template> getTemplates() {
         return templates;
-    }
-
-    public Collection<? extends Asset> getTransformers() {
-        return assets.findByMimeType("application/xslt+xml");
     }
 
     public Collection<? extends Asset> getStationeries() {
@@ -123,14 +122,22 @@ public class TemplatesBean implements Serializable {
 
     public String reinit() {
         if (element!=null) {
-            element.assignTransform(assets.findOne(transformId)).assignStationary(assets.findOne(stationeryId));
-            element=service.save(element);
-            addMessage("Saved");
+            element.assignTransform(transform).assignStationary(assets.findOne(stationeryId));
+            try {
+                element=service.save(element);
+                addMessage("Saved");
+                element=new Template();
+            } catch (ConstraintViolationException e) {
+                addMessage(e.getMessage());
+                templates.remove(element);
+            }
         }
-        element=new Template();
         return null;
     }
 
+    public void neu() {
+        element=new Template();
+    }
     public void showDialog() {
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("PF('preview').show();");

@@ -2,6 +2,7 @@ package de.gzockoll.prototype.jsf.entity;
 
 import com.google.common.collect.ImmutableMap;
 import de.gzockoll.prototype.jsf.validation.PDFDocument;
+import de.gzockoll.prototype.jsf.validation.ValidIXMLData;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,8 +10,8 @@ import lombok.ToString;
 import org.apache.camel.ProducerTemplate;
 
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
+import static java.lang.Integer.min;
 
 @Entity
 @EqualsAndHashCode(callSuper = false)
@@ -40,10 +42,11 @@ public class Template extends AbstractEntity {
     @Setter
     private LanguageCode languageCode = new LanguageCode();
 
-    @OneToOne
     // @NotNull
     @Setter
-    private Asset transform;
+    @Lob
+    @ValidIXMLData(message = "XSL Daten ungültig")
+    private String transform;
 
     @ManyToOne
     // @NotNull
@@ -84,7 +87,7 @@ public class Template extends AbstractEntity {
         return this;
     }
 
-    public Template assignTransform(Asset a) {
+    public Template assignTransform(String a) {
         checkNotNull(a);
         state = state.assignTransform(this, a);
         return this;
@@ -107,7 +110,7 @@ public class Template extends AbstractEntity {
 
     public byte[] preview(ProducerTemplate producer, String data) {
         final Map<String, Object> headers = ImmutableMap.<String, Object>builder()
-                .put("templateId", getTransform().getId())
+                .put("templateId", getId())
                 .put("stationeryId", getStationery().getId())
                 .build();
         return (byte[]) producer.requestBodyAndHeaders(data, headers);
@@ -115,5 +118,9 @@ public class Template extends AbstractEntity {
 
     public byte[] preview(ProducerTemplate producer) {
         return preview(producer,DATA);
+    }
+
+    public String transformShort(int len) {
+        return transform.substring(0,min(len, transform.length()));
     }
 }

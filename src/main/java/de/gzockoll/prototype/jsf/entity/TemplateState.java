@@ -13,7 +13,7 @@ public enum TemplateState {
         }
 
         @Override
-        public TemplateState assignTransform(Template template, Asset a) {
+        public TemplateState assignTransform(Template template, String a) {
             template.setTransform(a);
             return this;
         }
@@ -62,7 +62,7 @@ public enum TemplateState {
         return newState;
     }
 
-    public TemplateState assignTransform(Template template, Asset a) { throw new IllegalStateException(getErrorMessage()); }
+    public TemplateState assignTransform(Template template, String a) { throw new IllegalStateException(getErrorMessage()); }
 
     public TemplateState assignStationary(Template template, Asset a) { throw new IllegalStateException(getErrorMessage()); }
 }

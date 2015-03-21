@@ -25,10 +25,15 @@ import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.springframework.util.StringUtils.isEmpty;
+
 @Slf4j
 public class XMLValidator implements ConstraintValidator<ValidIXMLData, String> {
 
     private Validator validator;
+
+    public XMLValidator() {
+    }
 
     public XMLValidator(String ... schemata) {
         this.validator=createValidator(ImmutableSet.copyOf(schemata));
@@ -55,7 +60,8 @@ public class XMLValidator implements ConstraintValidator<ValidIXMLData, String> 
             Set<Source> sources=new HashSet<>();
             schemata.forEach(s -> {
                 try {
-                    sources.add(new StreamSource(new URL(s).openStream()));
+                    if (!isEmpty(s))
+                        sources.add(new StreamSource(new URL(s).openStream()));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

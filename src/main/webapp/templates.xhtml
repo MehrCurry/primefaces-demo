@@ -17,15 +17,14 @@
                             <h:outputLabel value="Status :" for="state"/>
                             <p:inputText id="state" label="Status" readonly="true"
                                          value="#{templatesBean.element.state}"/>
-                            <h:outputLabel value="Transform : *" for="transform"/>
-                            <p:selectOneMenu id="transform" value="#{templatesBean.transformId}">
-                                <f:selectItems value="#{templatesBean.transformers}" var="t" itemLabel="#{t.filename}" itemValue="#{t.id}"/>
-                            </p:selectOneMenu>
                             <h:outputLabel value="Stationery : *" for="stationery"/>
                             <p:selectOneMenu id="stationery"  value="#{templatesBean.stationeryId}">
                                 <f:selectItems value="#{templatesBean.stationeries}" var="t" itemLabel="#{t.filename}" itemValue="#{t.id}"/>
                             </p:selectOneMenu>
-                            <p:commandButton id="btn_reset" value="Reset" type="reset"/>
+                            <h:outputLabel value="Transform : *" for="transform"/>
+                            <pe:codeMirror id="transform" mode="application/xml" style="width: 800px"
+                                           theme="eclipse" value="#{templatesBean.transform}" lineNumbers="true"/>
+                            <p:commandButton id="btn_neu" value="Neu" type="reset" update="form" action="#{templatesBean.neu}"/>
                             <p:commandButton id="btn_add" value="Add" update="list edit"
                                              action="#{templatesBean.reinit}">
                                 <p:collector value="#{templatesBean.element}" addTo="#{templatesBean.templates}"
@@ -53,7 +52,7 @@
                                 <h:outputText value="#{template.languageCode}"/>
                             </p:column>
                             <p:column headerText="Transformer">
-                                <h:outputText value="#{template.transform}"/>
+                                <h:outputText value="#{template.transformShort(30)}"/>
                             </p:column>
                             <p:column headerText="Stationery">
                                 <h:outputText value="#{template.stationery}"/>
