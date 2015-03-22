@@ -136,7 +136,10 @@ public class TemplatesBean implements Serializable {
         if (element!=null) {
             // element.assignTransform(transform).assignStationary(assets.findOne(stationeryId));
             try {
+                Template oldElement = element;
                 element=service.save(element);
+                templates.remove(oldElement);
+                templates.add(element);
                 addMessage("Saved");
                 element=new Template();
             } catch (ConstraintViolationException e) {
@@ -167,7 +170,10 @@ public class TemplatesBean implements Serializable {
     public void requestApproval() {
         if (selected!=null) {
             try {
-                service.requestApproval(selected);
+                Template old = selected;
+                selected = service.requestApproval(selected);
+                templates.remove(old);
+                templates.add(selected);
             } catch (IllegalStateException e) {
                 handleException(e);
             }
@@ -177,7 +183,10 @@ public class TemplatesBean implements Serializable {
     public void approve() {
         if (selected!=null) {
             try {
-                service.approve(selected);
+                Template old = selected;
+                selected = service.approve(selected);
+                templates.remove(old);
+                templates.add(selected);
             } catch (IllegalStateException e) {
                 handleException(e);
             }
@@ -188,6 +197,6 @@ public class TemplatesBean implements Serializable {
         while (t.getCause() !=null) {
             t=t.getCause();
         }
-        addMessage(FacesMessage.SEVERITY_ERROR,t.getMessage());
+        addMessage(FacesMessage.SEVERITY_ERROR, t.getMessage());
     }
 }

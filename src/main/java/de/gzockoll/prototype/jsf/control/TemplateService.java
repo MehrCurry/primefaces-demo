@@ -113,13 +113,13 @@ public class TemplateService {
         return response;
     }
 
-    public void requestApproval(Template t) {
+    public Template requestApproval(Template t) {
         t.requestApproval();
-        repository.save(t);
+        return repository.save(t);
     }
 
-    public void approve(Template t) {
+    public Template approve(Template t) {
         t.approve();
-        repository.save(t);
+        return repository.save(t);
     }
 }
