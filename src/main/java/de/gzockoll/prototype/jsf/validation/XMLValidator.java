@@ -86,7 +86,7 @@ public class XMLValidator implements ConstraintValidator<ValidIXMLData, String> 
     public void validate(String s) throws ParserConfigurationException, IOException, SAXException {
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setValidating(false);
-        factory.setNamespaceAware(true);
+        factory.setNamespaceAware(false);
         DocumentBuilder parser = factory.newDocumentBuilder();
         parser.setErrorHandler(new SimpleErrorHandler());
         Document document = parser.parse(new ByteArrayInputStream(s.getBytes()));
@@ -99,7 +99,8 @@ public class XMLValidator implements ConstraintValidator<ValidIXMLData, String> 
             validate(s);
             return true;
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            constraintValidatorContext.buildConstraintViolationWithTemplate("could not parse xml: "+ e.getMessage());
+            constraintValidatorContext.buildConstraintViolationWithTemplate(e.getMessage()).addConstraintViolation();
+            System.out.println(e);
             return false;
         }
     }

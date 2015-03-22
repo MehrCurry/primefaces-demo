@@ -27,4 +27,8 @@ public class LanguageCode extends ValidateableObject {
     public void setCode(String code) {
         this.code = code;
     }
+
+    public String getDisplayLanguage() {
+        return Locale.forLanguageTag(code).getDisplayLanguage().toLowerCase();
+    }
 }

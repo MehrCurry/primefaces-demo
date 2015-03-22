@@ -40,12 +40,6 @@ public class TemplateService {
     @Autowired
     private TemplateGroupRepository groupRepository;
 
-    public void requestApproval(long templateId) {
-        Template t = repository.findOne(templateId);
-        t.requestApproval();
-        repository.save(t);
-    }
-
     public TemplateGroup addTemplate(long tenantId, String language, String qualifier, Template t) {
         repository.save(t);
         TemplateGroupPK pk = new TemplateGroupPK(tenantId, new LanguageCode(language), qualifier);
@@ -119,4 +113,13 @@ public class TemplateService {
         return response;
     }
 
+    public void requestApproval(Template t) {
+        t.requestApproval();
+        repository.save(t);
+    }
+
+    public void approve(Template t) {
+        t.approve();
+        repository.save(t);
+    }
 }

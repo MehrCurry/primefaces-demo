@@ -9,6 +9,8 @@ import lombok.Setter;
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.springframework.stereotype.Component;
 
@@ -89,8 +91,13 @@ public class TemplatesBean implements Serializable {
         return assets.findByMimeType("application/pdf");
     }
 
+
     public void addMessage(String msg) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg,  null);
+        addMessage(FacesMessage.SEVERITY_INFO,msg);
+    }
+
+    public void addMessage(FacesMessage.Severity severity,String msg) {
+        FacesMessage message = new FacesMessage(severity, msg,  null);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
@@ -108,10 +115,15 @@ public class TemplatesBean implements Serializable {
 
     public DefaultStreamedContent previewTemplate() {
         if (selected!=null) {
-            byte[] data = service.preview(selected);
-            media=new DefaultStreamedContent(new ByteArrayInputStream(data), "application/pdf");
-            showDialog();
-            return media;
+            try {
+                byte[] data = service.preview(selected);
+                media=new DefaultStreamedContent(new ByteArrayInputStream(data), "application/pdf");
+                showDialog();
+                return media;
+            } catch (Exception e) {
+                handleException(e);
+                return null;
+            }
         } else
             return null;
     }
@@ -120,9 +132,9 @@ public class TemplatesBean implements Serializable {
         return media;
     }
 
-    public String reinit() {
+    public void reinit() {
         if (element!=null) {
-            element.assignTransform(transform).assignStationary(assets.findOne(stationeryId));
+            // element.assignTransform(transform).assignStationary(assets.findOne(stationeryId));
             try {
                 element=service.save(element);
                 addMessage("Saved");
@@ -132,7 +144,14 @@ public class TemplatesBean implements Serializable {
                 templates.remove(element);
             }
         }
-        return null;
+    }
+
+    public void onRowSelect(SelectEvent event) {
+        element= (Template) event.getObject();
+    }
+
+    public void onRowUnselect(UnselectEvent event) {
+        element=new Template();
     }
 
     public void neu() {
@@ -143,5 +162,32 @@ public class TemplatesBean implements Serializable {
         context.execute("PF('preview').show();");
 
         // RequestContext.getCurrentInstance().openDialog("viewPDF");
+    }
+
+    public void requestApproval() {
+        if (selected!=null) {
+            try {
+                service.requestApproval(selected);
+            } catch (IllegalStateException e) {
+                handleException(e);
+            }
+        }
+    }
+
+    public void approve() {
+        if (selected!=null) {
+            try {
+                service.approve(selected);
+            } catch (IllegalStateException e) {
+                handleException(e);
+            }
+        }
+    }
+
+    private void handleException(Throwable t) {
+        while (t.getCause() !=null) {
+            t=t.getCause();
+        }
+        addMessage(FacesMessage.SEVERITY_ERROR,t.getMessage());
     }
 }

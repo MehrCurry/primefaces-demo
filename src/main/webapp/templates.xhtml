@@ -8,27 +8,39 @@
         <ui:composition template="template/main.xhtml">
             <ui:define name="content">
                 <h1 class="page-header "><i class="fa fa-file-code-o"></i> Templates</h1>
-                <h:form id="form">
-                    <p:growl id="msgs"/>
-                    <p:panel id="edit" header="Neues Template anlegen" style="margin-bottom:20px">
-                        <h:panelGrid columns="2" cellpadding="5">
+                <h:form id="templateForm">
+                    <p:growl id="msgs" showDetail="true"/>
+                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
+                    <p:panel header="Neues Template anlegen" style="margin-bottom:20px">
+                        <h:panelGrid id="edit" columns="3" cellpadding="5">
                             <h:outputLabel value="Sprache : *" for="language"/>
-                            <p:inputText id="language" label="Language" value="#{templatesBean.element.languageCode.code}" />
+                            <p:inputText id="language" label="Language"
+                                         value="#{templatesBean.element.languageCode.code}"/>
+                            <p:message for="language"/>
+
                             <h:outputLabel value="Status :" for="state"/>
                             <p:inputText id="state" label="Status" readonly="true"
                                          value="#{templatesBean.element.state}"/>
+                            <p:message for="state"/>
+
                             <h:outputLabel value="Stationery : *" for="stationery"/>
-                            <p:selectOneMenu id="stationery"  value="#{templatesBean.stationeryId}">
-                                <f:selectItems value="#{templatesBean.stationeries}" var="t" itemLabel="#{t.filename}" itemValue="#{t.id}"/>
+                            <p:selectOneMenu id="stationery" value="#{templatesBean.element.stationery}" converter="#{entityConverter}">
+                                <f:selectItem itemLabel="Auswahl" itemValue="" />
+                                <f:selectItems value="#{templatesBean.stationeries}" var="t" itemLabel="#{t.filename}"
+                                               itemValue="#{t}"/>
                             </p:selectOneMenu>
-                            <h:outputLabel value="Transform : *" for="transform"/>
-                            <pe:codeMirror id="transform" mode="application/xml" style="width: 800px"
-                                           theme="eclipse" value="#{templatesBean.transform}" lineNumbers="true"/>
-                            <p:commandButton id="btn_neu" value="Neu" type="reset" update="form" action="#{templatesBean.neu}"/>
-                            <p:commandButton id="btn_add" value="Add" update="list edit"
+                            <p:message for="stationery"/>
+
+                            <h:outputLabel value="Transform : *" for="transform" colspan="2"/>
+                            <p:inputTextarea id="transform" rows="15" cols="60" value="#{templatesBean.element.transform}" autoResize="false"/>
+                            <p:message for="transform"/>
+
+                            <p:commandButton id="btn_neu" value="Neu" update="templateForm:edit"
+                                             action="#{templatesBean.neu}"/>
+                            <p:commandButton id="btn_add" value="Add" update="list :templateForm:edit"
                                              action="#{templatesBean.reinit}">
                                 <p:collector value="#{templatesBean.element}" addTo="#{templatesBean.templates}"
-                                             unique="true" />
+                                             unique="true"/>
                             </p:commandButton>
                         </h:panelGrid>
                     </p:panel>
@@ -37,8 +49,12 @@
                             <p:menuitem value="Preview" icon="ui-icon-view"
                                         action="#{templatesBean.previewTemplate}"
                                         update=":media"/>
+                            <p:menuitem value="Request Approval" update="templates" icon="ui-icon-edit"
+                                        action="#{templatesBean.requestApproval}"/>
+                            <p:menuitem value="Approve" update="templates" icon="ui-icon-edit"
+                                        action="#{templatesBean.approve}"/>
                             <p:menuitem value="Edit" update="templates" icon="ui-icon-edit"
-                                        action="#{templatesBean.editTemplate}" />
+                                        action="#{templatesBean.editTemplate}"/>
                             <p:menuitem value="Delete" update="templates" icon="ui-icon-close"
                                         action="#{templatesBean.deleteTemplate}"/>
                         </p:contextMenu>
@@ -46,10 +62,15 @@
                                      editMode="cell"
                                      selectionMode="single" selection="#{templatesBean.selected}"
                                      rowKey="#{template.id}">
-                            <p:ajax event="cellEdit" listener="#{templatesBean.onCellEdit}" update=":form:msgs"/>
+                            <p:ajax event="cellEdit" listener="#{templatesBean.onCellEdit}"
+                                    update=":templateForm:msgs"/>
+                            <p:ajax event="rowSelect" listener="#{templatesBean.onRowSelect}"
+                                    update=":templateForm:edit :templateForm:stationery"/>
+                            <p:ajax event="rowUnselect" listener="#{templatesBean.onRowUnselect}"
+                                    update=":templateForm:edit"/>
 
                             <p:column headerText="Language">
-                                <h:outputText value="#{template.languageCode}"/>
+                                <h:outputText value="#{template.displayLanguage}"/>
                             </p:column>
                             <p:column headerText="Transformer">
                                 <h:outputText value="#{template.transformShort(30)}"/>
@@ -63,7 +84,7 @@
                         </p:dataTable>
                     </p:outputPanel>
                 </h:form>
-                <p:dialog id="preview" header="Prevew" widgetVar="preview" minHeight="40" resizable="true" >
+                <p:dialog id="preview" header="Prevew" widgetVar="preview" minHeight="40" resizable="true">
                     <!--
                     <p:media id="media2" value="#{templatesBean.getMedia()}" width="900" height="500" player="pdf"/>
                     -->

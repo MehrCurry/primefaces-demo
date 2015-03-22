@@ -2,7 +2,6 @@ package de.gzockoll.prototype.jsf.entity;
 
 import com.google.common.collect.ImmutableMap;
 import de.gzockoll.prototype.jsf.validation.PDFDocument;
-import de.gzockoll.prototype.jsf.validation.ValidIXMLData;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,16 +41,16 @@ public class Template extends AbstractEntity {
     @Setter
     private LanguageCode languageCode = new LanguageCode();
 
-    // @NotNull
+    @NotNull
     @Setter
     @Lob
-    @ValidIXMLData(message = "XSL Daten ungültig")
+    // @ValidIXMLData(message = "XSL Daten ungültig")
     private String transform;
 
     @ManyToOne
     // @NotNull
     @PDFDocument
-    @Setter
+    @Setter @Getter
     private Asset stationery;
 
     public Template() {
@@ -122,5 +121,9 @@ public class Template extends AbstractEntity {
 
     public String transformShort(int len) {
         return transform.substring(0,min(len, transform.length()));
+    }
+
+    public String getDisplayLanguage() {
+        return languageCode.getDisplayLanguage();
     }
 }
