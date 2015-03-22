@@ -141,7 +141,6 @@ public class TemplatesBean implements Serializable {
                 templates.remove(oldElement);
                 templates.add(element);
                 addMessage("Saved");
-                element=new Template();
             } catch (ConstraintViolationException e) {
                 addMessage(e.getMessage());
                 templates.remove(element);

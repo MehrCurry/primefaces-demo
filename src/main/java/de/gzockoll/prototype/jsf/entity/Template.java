@@ -111,6 +111,7 @@ public class Template extends AbstractEntity {
         final Map<String, Object> headers = ImmutableMap.<String, Object>builder()
                 .put("templateId", getId())
                 .put("stationeryId", getStationery().getId())
+                .put("random", Math.random())
                 .build();
         return (byte[]) producer.requestBodyAndHeaders(data, headers);
     }

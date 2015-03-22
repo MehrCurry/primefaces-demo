@@ -108,7 +108,8 @@ public class TemplateService {
         log.debug("Size " + size);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_XML);
-        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+        headers.setCacheControl("no-cache, must-revalidate, post-check=0, pre-check=0");
+        headers.set("Pragma", "no-cache");
         ResponseEntity<String> response = new ResponseEntity<>(template.getTransform(), headers, HttpStatus.OK);
         return response;
     }
