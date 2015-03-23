@@ -15,7 +15,7 @@
                         <h:panelGrid id="edit" columns="3" cellpadding="5">
                             <h:outputLabel value="Sprache : *" for="language"/>
                             <p:inputText id="language" label="Language"
-                                         value="#{templatesBean.element.languageCode.code}"/>
+                                         value="#{templatesBean.element.languageCode.code}" readonly="#{templatesBean.element.isReadOnly()}"/>
                             <p:message for="language"/>
 
                             <h:outputLabel value="Status :" for="state"/>
@@ -24,7 +24,7 @@
                             <p:message for="state"/>
 
                             <h:outputLabel value="Stationery : *" for="stationery"/>
-                            <p:selectOneMenu id="stationery" value="#{templatesBean.element.stationery}" converter="#{entityConverter}">
+                            <p:selectOneMenu id="stationery" value="#{templatesBean.element.stationery}" converter="#{entityConverter}" readonly="#{templatesBean.element.isReadOnly()}">
                                 <f:selectItem itemLabel="Auswahl" itemValue="" />
                                 <f:selectItems value="#{templatesBean.stationeries}" var="t" itemLabel="#{t.filename}"
                                                itemValue="#{t}"/>
@@ -32,12 +32,12 @@
                             <p:message for="stationery"/>
 
                             <h:outputLabel value="Transform : *" for="transform" colspan="2"/>
-                            <p:inputTextarea id="transform" rows="15" cols="60" value="#{templatesBean.element.transform}" autoResize="false"/>
+                            <p:inputTextarea id="transform" rows="15" cols="150" value="#{templatesBean.element.transform}" autoResize="false" readonly="#{templatesBean.element.isReadOnly()}"/>
                             <p:message for="transform"/>
 
                             <p:commandButton id="btn_neu" value="Neu" update="templateForm:edit"
                                              action="#{templatesBean.neu}"/>
-                            <p:commandButton id="btn_add" value="Add" update="list :templateForm:edit"
+                            <p:commandButton id="btn_add" value="Add" update="list :templateForm:edit" disabled="#{templatesBean.element.isReadOnly()}"
                                              action="#{templatesBean.reinit}">
                                 <p:collector value="#{templatesBean.element}" addTo="#{templatesBean.templates}"
                                              unique="true"/>
@@ -46,16 +46,18 @@
                     </p:panel>
                     <p:outputPanel id="list">
                         <p:contextMenu for="templates">
-                            <p:menuitem value="Preview" icon="ui-icon-view"
+                            <p:menuitem value="Preview" icon="fa fa-file-pdf-o"
                                         action="#{templatesBean.previewTemplate}"
-                                        update=":media"/>
-                            <p:menuitem value="Request Approval" update="templates" icon="ui-icon-edit"
+                                        update=":pages"/>
+                            <p:menuitem value="Request Approval" update="templates edit" icon="fa fa-lock"
                                         action="#{templatesBean.requestApproval}"/>
-                            <p:menuitem value="Approve" update="templates" icon="ui-icon-edit"
+                            <p:menuitem value="Approve" update="templates edit" icon="fa fa-plus"
                                         action="#{templatesBean.approve}"/>
-                            <p:menuitem value="Edit" update="templates" icon="ui-icon-edit"
-                                        action="#{templatesBean.editTemplate}"/>
-                            <p:menuitem value="Delete" update="templates" icon="ui-icon-close"
+                            <p:menuitem value="Edit" update="templates edit" icon="fa fa-unlock"
+                                        action="#{templatesBean.makeEditable}"/>
+                            <p:menuitem value="Clone" update="templates edit" icon="fa fa-copy"
+                                        action="#{templatesBean.cloneTemplate}"/>
+                            <p:menuitem value="Delete" update="templates" icon="fa fa-remove"
                                         action="#{templatesBean.deleteTemplate}"/>
                         </p:contextMenu>
                         <p:dataTable id="templates" var="template" value="#{templatesBean.templates}" editable="true"
@@ -76,21 +78,23 @@
                                 <h:outputText value="#{template.transformShort(30)}"/>
                             </p:column>
                             <p:column headerText="Stationery">
-                                <h:outputText value="#{template.stationery}"/>
+                                <h:outputText value="#{template.stationery.filename}"/>
                             </p:column>
                             <p:column headerText="Status">
                                 <h:outputText value="#{template.state.toString().toLowerCase()}"/>
                             </p:column>
+                            <p:column headerText="Create">
+                                <h:outputText value="#{template.createdAt}"/>
+                            </p:column>
+                            <p:column headerText="Update">
+                                <h:outputText value="#{template.updatedAt}"/>
+                            </p:column>
                         </p:dataTable>
                     </p:outputPanel>
                 </h:form>
-                <p:dialog id="preview" header="Prevew" widgetVar="preview" minHeight="40" resizable="true">
-                    <!--
-                    <p:media id="media2" value="#{templatesBean.getMedia()}" width="900" height="500" player="pdf"/>
-                    -->
-                    <pe:documentViewer id="media" width="900" height="500" value="#{templatesBean.getMedia()}"/>
-
-                </p:dialog>
+                <p:outputPanel>
+                    <pe:documentViewer id="pages" width="900" height="500" value="#{templatesBean.getMedia()}"/>
+                </p:outputPanel>
             </ui:define>
         </ui:composition>
     </h:body>

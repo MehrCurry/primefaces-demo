@@ -16,10 +16,15 @@ public abstract class AbstractEntity extends ValidateableObject {
     @Version
     private Long version;
 
-    private Date createdAt = null;
+    private Date createdAt;
+    private Date updatedAt;
 
     @PrePersist
     public void beforeSave() {
         createdAt=new Date();
+    }
+
+    @PreUpdate
+    public void beforeUpdate() { updatedAt=new Date();
     }
 }

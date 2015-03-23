@@ -14,19 +14,24 @@ public enum TemplateState {
 
         @Override
         public TemplateState assignTransform(Template template, String a) {
-            template.setTransform(a);
+            template.setTransformInternal(a);
             return this;
         }
 
         @Override
         public TemplateState assignStationary(Template template, Asset a) {
-            template.setStationery(a);
+            template.setStationeryInternal(a);
             return this;
         }
     }, READY_FOR_APPROVAL{
         @Override
         public TemplateState approve() {
             return transitionTo(APPROVED);
+        }
+
+        @Override
+        public TemplateState makeEditable() {
+            return transitionTo(EDITABLE);
         }
     },APPROVED;
 
@@ -65,4 +70,8 @@ public enum TemplateState {
     public TemplateState assignTransform(Template template, String a) { throw new IllegalStateException(getErrorMessage()); }
 
     public TemplateState assignStationary(Template template, Asset a) { throw new IllegalStateException(getErrorMessage()); }
+
+    public TemplateState makeEditable()  {
+        throw new IllegalStateException(getErrorMessage());
+    }
 }

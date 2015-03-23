@@ -123,4 +123,9 @@ public class TemplateService {
         t.approve();
         return repository.save(t);
     }
+
+    public Template makeEditable(Template t) {
+        t.makeEditable();
+        return repository.save(t);
+    }
 }

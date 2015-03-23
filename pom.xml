@@ -25,6 +25,7 @@
         <java.version>1.8</java.version>
         <camel.version>2.15.0</camel.version>
         <pdfbox.version>1.8.8</pdfbox.version>
+        <primefaces.version>5.1</primefaces.version>
     </properties>
 
     <dependencies>
@@ -61,7 +62,7 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>5.1</version>
+            <version>${primefaces.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sun.faces</groupId>
@@ -89,14 +90,9 @@
             <artifactId>tomcat-embed-jasper</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.14.4</version>
-        </dependency>
-        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>18.0</version>
+            <version>[18.0,)</version>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>

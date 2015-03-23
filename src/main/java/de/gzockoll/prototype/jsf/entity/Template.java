@@ -42,7 +42,6 @@ public class Template extends AbstractEntity {
     private LanguageCode languageCode = new LanguageCode();
 
     @NotNull
-    @Setter
     @Lob
     // @ValidIXMLData(message = "XSL Daten ungültig")
     private String transform;
@@ -50,10 +49,26 @@ public class Template extends AbstractEntity {
     @ManyToOne
     // @NotNull
     @PDFDocument
-    @Setter @Getter
+    @Getter
     private Asset stationery;
 
     public Template() {
+    }
+
+    void setStationeryInternal(Asset stationery) {
+        this.stationery = stationery;
+    }
+
+    public void setStationery(Asset stationery) {
+        assignStationary(stationery);
+    }
+
+    public void setTransform(String transform) {
+        assignTransform(transform);
+    }
+
+    void setTransformInternal(String transform) {
+        this.transform = transform;
     }
 
     public Template(String isoLanguage) {
@@ -83,6 +98,11 @@ public class Template extends AbstractEntity {
     public Template approve() {
         checkState(assetsPresent());
         state = state.approve();
+        return this;
+    }
+
+    public Template makeEditable() {
+        state = state.makeEditable();
         return this;
     }
 
@@ -126,5 +146,9 @@ public class Template extends AbstractEntity {
 
     public String getDisplayLanguage() {
         return languageCode.getDisplayLanguage();
+    }
+
+    public boolean isReadOnly() {
+        return state!=TemplateState.EDITABLE;
     }
 }
