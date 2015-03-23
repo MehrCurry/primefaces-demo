@@ -197,9 +197,9 @@
                 <!-- GOODS, HANDLING, SHIPMENT, VOUCHER, SUBTOTAL -->
                 <ItemType>ARTICLE</ItemType>
                 <ArticleNumber>1564</ArticleNumber>
-                <Description1>DVD</Description1>
+                <Description1>Donaudampfschifffahrtselektrizitätenhauptbetriebswerkbauunterbeamtengesellschaft Wimpel</Description1>
                 <!-- Trennung der Description Felder über Pipe Zeichen: Maximal 5 -->
-                <Description2>Jurassic Park</Description2>
+                <Description2>Farbe: rot</Description2>
                 <DeliveryStartDate>2012-01-01</DeliveryStartDate>
                 <DeliveryEndDate>2012-01-31</DeliveryEndDate>
                 <Quantity>2</Quantity>
