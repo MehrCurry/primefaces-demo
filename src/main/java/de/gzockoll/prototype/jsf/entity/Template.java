@@ -18,13 +18,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
+import static com.google.common.base.Preconditions.*;
 import static java.lang.Integer.min;
 
 @Entity
 @EqualsAndHashCode(callSuper = false)
-@ToString
+@ToString(exclude = "group")
 @Getter
 public class Template extends AbstractEntity {
     public static String DATA;
@@ -36,6 +35,9 @@ public class Template extends AbstractEntity {
             throw new RuntimeException(e);
         }
     }
+
+    @ManyToOne
+    private TemplateGroup group;
 
     @NotNull
     @Setter
@@ -53,6 +55,11 @@ public class Template extends AbstractEntity {
     private Asset stationery;
 
     public Template() {
+    }
+
+    void setGroup(TemplateGroup group) {
+        checkArgument(group != null && group.hasSameLanguageAs(this));
+        this.group = group;
     }
 
     void setStationeryInternal(Asset stationery) {
@@ -141,7 +148,7 @@ public class Template extends AbstractEntity {
     }
 
     public String transformShort(int len) {
-        return transform.substring(0,min(len, transform.length()));
+        return transform.substring(0, min(len, transform.length()));
     }
 
     public String getDisplayLanguage() {
@@ -150,5 +157,9 @@ public class Template extends AbstractEntity {
 
     public boolean isReadOnly() {
         return state!=TemplateState.EDITABLE;
+    }
+
+    public boolean isActive() {
+        return group != null && this.equals(group.getActiveTemplate().orElse(null));
     }
 }

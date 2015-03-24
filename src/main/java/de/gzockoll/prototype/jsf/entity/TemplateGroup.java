@@ -6,6 +6,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -17,7 +18,7 @@ public class TemplateGroup {
     @EmbeddedId
     private TemplateGroupPK id;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "template")
     private Collection<Template> templates=new ArrayList<>();
 
     @OneToOne
@@ -29,8 +30,13 @@ public class TemplateGroup {
         this.id=new TemplateGroupPK(tenantId,new LanguageCode(language),qualifier);
     }
 
+    public Collection<Template> getTemplates() {
+        return Collections.unmodifiableCollection(templates);
+    }
+
     public void addTemplate(Template t) {
         checkArgument(hasSameLanguageAs(t), "Language mismatch: " + id.getLanguageCode() + "<>" + t.getLanguageCode());
+        t.setGroup(this);
         templates.add(t);
     }
 
