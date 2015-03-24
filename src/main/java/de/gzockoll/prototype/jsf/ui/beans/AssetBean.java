@@ -10,6 +10,7 @@ import org.primefaces.model.UploadedFile;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.ManagedBean;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -19,7 +20,7 @@ import java.util.Collection;
 @ManagedBean
 @Component
 @ViewScoped
-public class AssetBean {
+public class AssetBean extends AbstractBean {
 
     @Inject
     private AssetService service;
@@ -30,6 +31,7 @@ public class AssetBean {
     @Getter @Setter
     private UploadedFile file;
 
+    @Getter
     private Collection<Asset> assets=null;
 
     public void upload() {
@@ -49,9 +51,19 @@ public class AssetBean {
         }
     }
 
-    public Collection<Asset> getAssets() {
-        if (assets==null)
-            assets=service.findAll();
-        return assets;
+    @PostConstruct
+    public void init() {
+        assets=service.findAll();
+    }
+
+    public void deleteAsset() {
+        try {
+            if (selectedAsset!=null) {
+                service.delete(selectedAsset);
+                assets.remove(selectedAsset);
+            }
+        } catch (Exception e) {
+            handleException(e);
+        }
     }
 }

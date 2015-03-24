@@ -29,7 +29,7 @@ import java.util.Collections;
 @ManagedBean
 @Component
 @ViewScoped
-public class TemplatesBean implements Serializable {
+public class TemplatesBean extends AbstractBean {
 
     @Inject
     private TemplateService service;
@@ -95,15 +95,6 @@ public class TemplatesBean implements Serializable {
         return assets.findByMimeType("application/pdf");
     }
 
-
-    public void addMessage(String msg) {
-        addMessage(FacesMessage.SEVERITY_INFO, "INFO",msg);
-    }
-
-    public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
-        FacesMessage message = new FacesMessage(severity, summary, detail);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
 
     public void deleteTemplate() {
         if (selected != null) {
@@ -214,10 +205,4 @@ public class TemplatesBean implements Serializable {
         }
     }
 
-    private void handleException(Throwable t) {
-        while (t.getCause() != null) {
-            t = t.getCause();
-        }
-        addMessage(FacesMessage.SEVERITY_ERROR, "ERROR", t.getMessage());
-    }
 }

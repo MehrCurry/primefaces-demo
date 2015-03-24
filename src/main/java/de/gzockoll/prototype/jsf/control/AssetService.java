@@ -27,4 +27,8 @@ public class AssetService {
     public void save(Asset asset) {
         repository.save(asset);
     }
+
+    public void delete(Asset asset) {
+        repository.delete(asset);
+    }
 }

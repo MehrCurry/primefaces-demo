@@ -1,0 +1,76 @@
+<f:view xmlns="http://www.w3c.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="template/main.xhtml">
+        <ui:define name="content">
+            <h1 class="page-header "><i class="fa fa-newspaper-o"></i> Groups</h1>
+            <h:form id="form">
+                <p:growl id="msgs" showDetail="true"/>
+                <p:panel header="Template Gruppe" style="margin-bottom:20px">
+                    <h:panelGrid id="edit" columns="3">
+                        <h:outputLabel value="Name : *" for="name"/>
+                        <p:inputText id="name" label="Name:"
+                                     value="#{groupsBean.element.name}"/>
+                        <p:message for="name"/>
+
+                        <h:outputLabel value="Qualifier : *" for="qualifier"/>
+                        <p:inputText id="qualifier" label="Qualifier"
+                                     value="#{groupsBean.element.qualifier}"/>
+                        <p:message for="qualifier"/>
+
+                        <h:outputLabel value="Standardsprache : *" for="language"/>
+                        <p:inputText id="language" label="Language"
+                                     value="#{groupsBean.element.languageCode.displayLanguage}"/>
+                        <p:message for="language"/>
+
+                        <h:outputLabel value="Typ : *" for="type"/>
+                        <p:selectOneMenu id="type" value="#{groupsBean.element.type}" >
+                        <f:selectItem itemLabel="Auswahl" itemValue="" />
+                        <f:selectItems value="#{groupsBean.types}" var="t" itemLabel="#{t}"
+                                       itemValue="#{t}"/>
+                        </p:selectOneMenu>
+                        <p:message for="type"/>
+
+                        <p:column colspan="2">
+                            <p:commandButton id="btn_neu" value="Neu" update="edit" icon="fa fa-edit"
+                                             action="#{groupsBean.neu}"/>
+                            <p:commandButton id="btn_add" value="Save" update="groups edit" icon="fa fa-close"
+                                             action="#{groupsBean.save}">
+                                <p:collector value="#{groupsBean.element}" addTo="#{goupsBean.groups}"
+                                             unique="true"/>
+                            </p:commandButton>
+                        </p:column>
+                    </h:panelGrid>
+                </p:panel>
+                <p:contextMenu for="groups">
+                    <p:menuitem value="Reload" update="groups" icon="fa fa-remove"
+                                action="#{groupsBean.init}"/>
+                    <p:menuitem value="Delete" update="groups" icon="fa fa-remove"
+                                action="#{groupsBean.deleteAsset}"/>
+                </p:contextMenu>
+
+                <p:dataTable id="groups" var="group" value="#{groupsBean.groups}" editable="true" editMode="cell"
+                             selectionMode="single" selection="#{groupsBean.selected}" rowKey="#{group.id}">
+                    <p:ajax event="cellEdit" listener="#{groupsBean.onCellEdit}" update=":form:msgs"/>
+
+                    <p:column headerText="Name">
+                        <h:inputText value="#{group.name}"/>
+                    </p:column>
+                    <p:column headerText="Language">
+                       <h:inputText value="#{group.languageCode.displayLanguage}"/>
+                    </p:column>
+                    <p:column headerText="Qualifier">
+                        <h:outputText value="#{group.qualifier}"/>
+                    </p:column>
+                    <p:column headerText="Count">
+                        <h:outputText value="#{group.templates.size}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </ui:define>
+        </ui:composition>
+    </h:body>
+</f:view>

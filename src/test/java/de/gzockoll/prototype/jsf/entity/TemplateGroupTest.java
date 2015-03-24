@@ -11,9 +11,16 @@ public class TemplateGroupTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
+    public void testDelegate() {
+        TemplateGroup group=new TemplateGroup(4711,"Name","uk","JUnit");
+        assertThat(group.getName()).isEqualTo("Name");
+        assertThat(group.getQualifier()).isEqualTo("JUnit");
+    }
+
+    @Test
     public void testAddTemplates() {
         Template t = new Template("de");
-        TemplateGroup group = new TemplateGroup(1, "de", "junit");
+        TemplateGroup group = new TemplateGroup(1, "test", "de", "junit");
         group.addTemplate(t);
         assertThat(group.getTemplates()).contains(t);
         assertThat(t.getGroup()).isEqualTo(group);
@@ -22,7 +29,7 @@ public class TemplateGroupTest {
     @Test
     public void testHasSameLanguage() {
         Template t = new Template("de");
-        TemplateGroup group = new TemplateGroup(1, "en", "junit");
+        TemplateGroup group = new TemplateGroup(1, "test", "en", "junit");
         thrown.expect(IllegalArgumentException.class);
         t.setGroup(group);
     }
@@ -32,7 +39,7 @@ public class TemplateGroupTest {
         Template t = new Template("de");
         assertThat(t.isActive()).isFalse();
 
-        TemplateGroup group = new TemplateGroup(1, "de", "junit");
+        TemplateGroup group = new TemplateGroup(1, "test", "de", "junit");
         group.addTemplate(t);
         assertThat(t.isActive()).isFalse();
 

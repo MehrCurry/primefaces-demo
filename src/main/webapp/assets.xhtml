@@ -9,7 +9,14 @@
             <h1 class="page-header "><i class="fa fa-upload"></i> Assets</h1>
             <h:form id="form">
                 <p:growl id="msgs" showDetail="true"/>
-                <p:dataTable var="asset" value="#{assetBean.assets}" editable="true" editMode="cell"
+                <p:contextMenu for="assets">
+                    <p:menuitem value="Reload" update="assets" icon="fa fa-remove"
+                                action="#{assetBean.init}"/>
+                    <p:menuitem value="Delete" update="assets" icon="fa fa-remove"
+                                action="#{assetBean.deleteAsset}"/>
+                </p:contextMenu>
+
+                <p:dataTable id="assets" var="asset" value="#{assetBean.assets}" editable="true" editMode="cell"
                              selectionMode="single" selection="#{assetBean.selectedAsset}" rowKey="#{asset.id}">
                     <p:ajax event="cellEdit" listener="#{assetBean.onCellEdit}" update=":form:msgs"/>
 
@@ -30,6 +37,7 @@
                         <h:outputText value="#{asset.sizeInKB()} KB"/>
                     </p:column>
                 </p:dataTable>
+                <p:commandButton value="Reload" ajax="true" update="assets" actionListener="#{assetBean.init}" />
             </h:form>
             <h:form enctype="multipart/form-data">
                 <p:fileUpload value="#{assetBean.file}" mode="simple" skinSimple="true" sizeLimit="2000000"/>

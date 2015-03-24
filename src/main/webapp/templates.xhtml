@@ -12,7 +12,7 @@
                     <p:growl id="msgs" showDetail="true"/>
                     <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
                     <p:panel header="Neues Template anlegen" style="margin-bottom:20px">
-                        <h:panelGrid id="edit" columns="3" cellpadding="5">
+                        <h:panelGrid id="edit" columns="3">
                             <h:outputLabel value="Sprache : *" for="language"/>
                             <p:inputText id="language" label="Language"
                                          value="#{templatesBean.element.languageCode.code}" readonly="#{templatesBean.element.isReadOnly()}"/>
@@ -22,6 +22,10 @@
                             <p:inputText id="state" label="Status" readonly="true"
                                          value="#{templatesBean.element.state}"/>
                             <p:message for="state"/>
+
+                            <h:outputLabel value="Aktiv :" for="active"/>
+                            <p:inputSwitch id="active" value="#{templatesBean.element.active}" disabled="true"/>
+                            <p:message for="active"/>
 
                             <h:outputLabel value="Stationery : *" for="stationery"/>
                             <p:selectOneMenu id="stationery" value="#{templatesBean.element.stationery}" converter="#{entityConverter}" readonly="#{templatesBean.element.isReadOnly()}">
@@ -35,13 +39,15 @@
                             <p:inputTextarea id="transform" rows="15" cols="150" value="#{templatesBean.element.transform}" autoResize="false" readonly="#{templatesBean.element.isReadOnly()}"/>
                             <p:message for="transform"/>
 
-                            <p:commandButton id="btn_neu" value="Neu" update="templateForm:edit"
-                                             action="#{templatesBean.neu}"/>
-                            <p:commandButton id="btn_add" value="Add" update="list :templateForm:edit" disabled="#{templatesBean.element.isReadOnly()}"
-                                             action="#{templatesBean.reinit}">
-                                <p:collector value="#{templatesBean.element}" addTo="#{templatesBean.templates}"
-                                             unique="true"/>
-                            </p:commandButton>
+                            <p:column colspan="2">
+                                <p:commandButton id="btn_neu" value="Neu" update="templateForm:edit" icon="fa fa-edit"
+                                                 action="#{templatesBean.neu}"/>
+                                <p:commandButton id="btn_add" value="Add" update="list :templateForm:edit" disabled="#{templatesBean.element.isReadOnly()}" icon="fa fa-close"
+                                                 action="#{templatesBean.reinit}">
+                                    <p:collector value="#{templatesBean.element}" addTo="#{templatesBean.templates}"
+                                                 unique="true"/>
+                                </p:commandButton>
+                            </p:column>
                         </h:panelGrid>
                     </p:panel>
                     <p:outputPanel id="list">
@@ -82,6 +88,11 @@
                             </p:column>
                             <p:column headerText="Status">
                                 <h:outputText value="#{template.state.toString().toLowerCase()}"/>
+                            </p:column>
+                            <p:column headerText="Aktiv">
+                                <ui:fragment rendered="#{templatesBean.element.active}">
+                                    <i class="fa fa-toggle-on" />
+                                </ui:fragment>
                             </p:column>
                             <p:column headerText="Create">
                                 <h:outputText value="#{template.createdAt}"/>

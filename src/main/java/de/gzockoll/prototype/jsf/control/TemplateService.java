@@ -40,16 +40,11 @@ public class TemplateService {
     @Autowired
     private TemplateGroupRepository groupRepository;
 
-    public TemplateGroup addTemplate(long tenantId, String language, String qualifier, Template t) {
-        repository.save(t);
-        TemplateGroupPK pk = new TemplateGroupPK(tenantId, new LanguageCode(language), qualifier);
-        TemplateGroup group = groupRepository.findOne(pk);
-        if (group == null) {
-            group = new TemplateGroup(tenantId, language, qualifier);
+    public void addTemplate(TemplateGroup group, Template t) {
+        if (group != null) {
+            group.addTemplate(t);
+            groupRepository.save(group);
         }
-
-        group.addTemplate(t);
-        return groupRepository.save(group);
     }
 
     public void updateTemplate(Template t) {
