@@ -1,5 +1,10 @@
 package de.gzockoll.prototype.jsf.entity;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+import static org.springframework.util.StringUtils.capitalize;
+
 /**
  * Created by Guido on 01.03.2015.
  */
@@ -111,5 +116,10 @@ public enum TemplateType {
      */
     public boolean isXmlTemplate() {
         return xmlTemplate;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.asList(name().split("_")).stream().map(s -> capitalize(s.toLowerCase())).collect(Collectors.joining(" "));
     }
 }

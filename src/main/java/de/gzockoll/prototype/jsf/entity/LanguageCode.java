@@ -9,7 +9,7 @@ import javax.persistence.Embeddable;
 import java.util.Locale;
 
 @Embeddable
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 @Getter
 @ToString
 public class LanguageCode extends ValidateableObject {

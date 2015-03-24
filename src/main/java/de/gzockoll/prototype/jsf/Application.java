@@ -57,6 +57,7 @@ public class Application extends SpringBootServletInitializer implements Servlet
     @Override
     public void setServletContext(ServletContext servletContext) {
         servletContext.setInitParameter("com.sun.faces.forceLoadConfiguration", Boolean.TRUE.toString());
+        servletContext.setInitParameter("primefaces.FONT_AWESOME", Boolean.TRUE.toString());
     }
 
     @Bean

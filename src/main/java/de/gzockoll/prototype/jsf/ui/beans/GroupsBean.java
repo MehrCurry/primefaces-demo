@@ -5,6 +5,8 @@ import de.gzockoll.prototype.jsf.entity.TemplateGroup;
 import de.gzockoll.prototype.jsf.entity.TemplateType;
 import lombok.Getter;
 import lombok.Setter;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -54,4 +56,24 @@ public class GroupsBean extends AbstractBean {
     public void neu() {
         element=new TemplateGroup(0, "", Locale.getDefault().getLanguage(),"");
     }
+
+    public void onRowSelect(SelectEvent event) {
+        element = (TemplateGroup) event.getObject();
+    }
+
+    public void onRowUnselect(UnselectEvent event) {
+        neu();
+    }
+
+    public void delete() {
+        if (element != null) {
+            try {
+                service.delete(element);
+                groups.remove(element);
+            } catch (Exception e) {
+                handleException(e);
+            }
+        }
+    }
+
 }

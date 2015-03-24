@@ -23,4 +23,8 @@ public class GroupService {
     public TemplateGroup save(TemplateGroup group) { repository.save(group);
         return group;
     }
+
+    public void delete(TemplateGroup group) {
+        repository.delete(group);
+    }
 }
