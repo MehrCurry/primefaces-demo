@@ -38,8 +38,8 @@ public class TemplateGroup {
     }
 
     public void addTemplate(Template t) {
-        checkArgument(hasSameLanguageAs(t), "Language mismatch: " + id.getLanguageCode() + "<>" + t.getLanguageCode());
-        t.setGroup(this);
+        checkArgument(t != null);
+        checkArgument(t.belongsTo(this), "Template must be owned by this group.");
         templates.add(t);
     }
 
@@ -56,5 +56,15 @@ public class TemplateGroup {
     public boolean hasSameLanguageAs(Template t) {
         checkNotNull(t);
         return t.getLanguageCode().equals(id.getLanguageCode());
+    }
+
+    public String getLabel() {
+        return getName() + "[" + getLanguageCode().getDisplayLanguage() + "] " + getQualifier() + " " + type;
+    }
+
+    public Template createTemplate() {
+        Template t = new Template(this, getLanguageCode().getCode());
+        addTemplate(t);
+        return t;
     }
 }

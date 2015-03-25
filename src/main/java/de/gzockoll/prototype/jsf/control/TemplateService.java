@@ -123,4 +123,8 @@ public class TemplateService {
         t.makeEditable();
         return repository.save(t);
     }
+
+    public Collection<TemplateGroup> getGroups() {
+        return groupRepository.findAll();
+    }
 }

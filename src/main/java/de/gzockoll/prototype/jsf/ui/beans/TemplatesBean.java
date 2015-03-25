@@ -4,6 +4,7 @@ import de.gzockoll.prototype.jsf.control.TemplateService;
 import de.gzockoll.prototype.jsf.entity.Asset;
 import de.gzockoll.prototype.jsf.entity.AssetRepository;
 import de.gzockoll.prototype.jsf.entity.Template;
+import de.gzockoll.prototype.jsf.entity.TemplateGroup;
 import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.component.datatable.DataTable;
@@ -22,7 +23,6 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolationException;
 import java.io.ByteArrayInputStream;
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -38,6 +38,10 @@ public class TemplatesBean extends AbstractBean {
     private AssetRepository assets;
 
     private Template selected;
+
+    @Getter
+    @Setter
+    private TemplateGroup factory;
 
     @Getter
     @Setter
@@ -147,6 +151,10 @@ public class TemplatesBean extends AbstractBean {
         element = new Template();
     }
 
+    public Collection<TemplateGroup> getGroups() {
+        return service.getGroups();
+    }
+
     public void neu() {
         element = new Template();
     }
@@ -202,6 +210,12 @@ public class TemplatesBean extends AbstractBean {
             Template newTemplate = new Template(selected.getLanguageCode()).assignStationary(selected.getStationery()).assignTransform(selected.getTransform());
             service.save(newTemplate);
             templates.add(newTemplate);
+        }
+    }
+
+    public void newTemplateForGroup() {
+        if (factory != null) {
+            selected = factory.createTemplate();
         }
     }
 

@@ -57,8 +57,16 @@ public class Template extends AbstractEntity {
     public Template() {
     }
 
+    public Template(TemplateGroup group, String isoCode) {
+        checkArgument(group != null);
+        checkArgument(isoCode != null);
+
+        this.group = group;
+        this.languageCode = new LanguageCode(isoCode);
+    }
+
     void setGroup(TemplateGroup group) {
-        checkArgument(group != null && group.hasSameLanguageAs(this));
+        checkArgument(group != null);
         this.group = group;
     }
 
@@ -161,5 +169,9 @@ public class Template extends AbstractEntity {
 
     public boolean isActive() {
         return group != null && this.equals(group.getActiveTemplate().orElse(null));
+    }
+
+    public boolean belongsTo(TemplateGroup group) {
+        return this.group != null && this.group.equals(group);
     }
 }

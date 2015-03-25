@@ -18,6 +18,16 @@
                                          value="#{templatesBean.element.languageCode.code}" readonly="#{templatesBean.element.isReadOnly()}"/>
                             <p:message for="language"/>
 
+                            <h:outputLabel value="Group : *" for="group"/>
+                            <p:selectOneMenu id="group" value="#{templatesBean.element.group}"
+                                             converter="#{entityConverter}"
+                                             readonly="#{templatesBean.element.isReadOnly()}">
+                                <f:selectItem itemLabel="Auswahl" itemValue=""/>
+                                <f:selectItems value="#{templatesBean.groups}" var="g" itemLabel="#{g.label}"
+                                               itemValue="#{g}"/>
+                            </p:selectOneMenu>
+                            <p:message for="group"/>
+
                             <h:outputLabel value="Status :" for="state"/>
                             <p:inputText id="state" label="Status" readonly="true"
                                          value="#{templatesBean.element.state}"/>
@@ -106,6 +116,20 @@
                 <p:outputPanel>
                     <pe:documentViewer id="pages" width="900" height="500" value="#{templatesBean.getMedia()}"/>
                 </p:outputPanel>
+                <p:dialog>
+                    <h:form>
+                        <h:outputLabel value="Group : *" for="groupSelector"/>
+                        <p:selectOneMenu id="groupSelector" value="#{templatesBean.factory}"
+                                         converter="#{entityConverter}">
+                            <f:selectItem itemLabel="Auswahl" itemValue=""/>
+                            <f:selectItems value="#{templatesBean.groups}" var="g" itemLabel="#{g.label}"
+                                           itemValue="#{g}"/>
+                        </p:selectOneMenu>
+                        <p:message for="groupSelector"/>
+                        <p:commandButton id="btn_ok" value="OK" update=":templateForm:edit" icon="fa fa-edit"
+                                         action="#{templatesBean.newTemplateForGroup()}"/>
+                    </h:form>
+                </p:dialog>
             </ui:define>
         </ui:composition>
     </h:body>

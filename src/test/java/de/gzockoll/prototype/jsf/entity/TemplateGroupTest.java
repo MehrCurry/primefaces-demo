@@ -19,27 +19,19 @@ public class TemplateGroupTest {
 
     @Test
     public void testAddTemplates() {
-        Template t = new Template("de");
         TemplateGroup group = new TemplateGroup(1, "test", "de", "junit");
-        group.addTemplate(t);
+        Template t = group.createTemplate();
+
         assertThat(group.getTemplates()).contains(t);
         assertThat(t.getGroup()).isEqualTo(group);
     }
 
     @Test
-    public void testHasSameLanguage() {
-        Template t = new Template("de");
-        TemplateGroup group = new TemplateGroup(1, "test", "en", "junit");
-        thrown.expect(IllegalArgumentException.class);
-        t.setGroup(group);
-    }
-
-    @Test
     public void isActive() {
-        Template t = new Template("de");
-        assertThat(t.isActive()).isFalse();
 
         TemplateGroup group = new TemplateGroup(1, "test", "de", "junit");
+        Template t = group.createTemplate();
+        assertThat(t.isActive()).isFalse();
         group.addTemplate(t);
         assertThat(t.isActive()).isFalse();
 
