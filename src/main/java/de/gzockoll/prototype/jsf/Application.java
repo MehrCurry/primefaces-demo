@@ -58,6 +58,7 @@ public class Application extends SpringBootServletInitializer implements Servlet
     public void setServletContext(ServletContext servletContext) {
         servletContext.setInitParameter("com.sun.faces.forceLoadConfiguration", Boolean.TRUE.toString());
         servletContext.setInitParameter("primefaces.FONT_AWESOME", Boolean.TRUE.toString());
+        servletContext.setInitParameter("primefaces.UPLOADER","commons");
     }
 
     @Bean
@@ -66,7 +67,7 @@ public class Application extends SpringBootServletInitializer implements Servlet
         FileUploadFilter uploadFilter=new FileUploadFilter();
         bean.setFilter(uploadFilter);
         bean.addServletRegistrationBeans(facesServletRegistration());
-        bean.setOrder(1);
+        bean.setOrder(2);
         return bean;
     }
 }

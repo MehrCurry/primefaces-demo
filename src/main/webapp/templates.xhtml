@@ -18,16 +18,6 @@
                                          value="#{templatesBean.element.languageCode.code}" readonly="#{templatesBean.element.isReadOnly()}"/>
                             <p:message for="language"/>
 
-                            <h:outputLabel value="Group : *" for="group"/>
-                            <p:selectOneMenu id="group" value="#{templatesBean.element.group}"
-                                             converter="#{entityConverter}"
-                                             readonly="#{templatesBean.element.isReadOnly()}">
-                                <f:selectItem itemLabel="Auswahl" itemValue=""/>
-                                <f:selectItems value="#{templatesBean.groups}" var="g" itemLabel="#{g.label}"
-                                               itemValue="#{g}"/>
-                            </p:selectOneMenu>
-                            <p:message for="group"/>
-
                             <h:outputLabel value="Status :" for="state"/>
                             <p:inputText id="state" label="Status" readonly="true"
                                          value="#{templatesBean.element.state}"/>

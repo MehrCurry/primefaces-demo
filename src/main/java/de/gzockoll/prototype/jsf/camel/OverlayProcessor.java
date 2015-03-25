@@ -6,6 +6,7 @@ import org.apache.camel.Processor;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
+import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.util.Overlay;
 import org.apache.pdfbox.util.PageExtractor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.List;
 
 @Component
 public class OverlayProcessor implements Processor {
@@ -43,9 +45,14 @@ public class OverlayProcessor implements Processor {
         Overlay overlay=new Overlay();
         overlay.setInputPDF(inputDocument);
 
-        int pages=stationery.getNumberOfPages();
+        List<PDPage> pages = stationery.getDocumentCatalog().getAllPages();
+        pages.forEach(p -> {
+            System.out.println("Orientation: " + p.findRotation());
+            p.setRotation(0);
+        });
+        int pageCount=stationery.getNumberOfPages();
 
-        switch (pages) {
+        switch (pageCount) {
             case 1:
                 overlay.setDefaultOverlayPDF(stationery);
                 break;

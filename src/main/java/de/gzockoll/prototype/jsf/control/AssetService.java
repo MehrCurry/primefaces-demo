@@ -24,8 +24,9 @@ public class AssetService {
         return repository.findAll();
     }
 
-    public void save(Asset asset) {
+    public Asset save(Asset asset) {
         repository.save(asset);
+        return asset;
     }
 
     public void delete(Asset asset) {

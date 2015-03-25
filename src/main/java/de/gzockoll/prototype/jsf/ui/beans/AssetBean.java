@@ -35,8 +35,13 @@ public class AssetBean extends AbstractBean {
     private Collection<Asset> assets=null;
 
     public void upload() {
+        if (file==null) {
+            addMessage(FacesMessage.SEVERITY_WARN,"Warning","File is null");
+            return;
+        }
         Asset asset=new Asset(file.getContents(),file.getFileName());
-        service.save(asset);
+        asset=service.save(asset);
+        assets.add(asset);
     }
 
     public void onCellEdit(CellEditEvent event) {

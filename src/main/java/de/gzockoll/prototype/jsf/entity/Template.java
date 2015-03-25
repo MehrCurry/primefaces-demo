@@ -30,7 +30,7 @@ public class Template extends AbstractEntity {
 
     static {
         try {
-            DATA = new String(Files.readAllBytes(Paths.get("camel/vorlage/long-dataset.xml")), Charset.forName("UTF-8"));
+            DATA = new String(Files.readAllBytes(Paths.get("camel/vorlage/long-dataset-jkil.xml")), Charset.forName("UTF-8"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
