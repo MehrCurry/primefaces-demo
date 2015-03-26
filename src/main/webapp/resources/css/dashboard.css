@@ -1,98 +1,101 @@
-/*
- * Base structure
- */
-
-/* Move down content because we have a fixed navbar that is 50px tall */
+/* Eric Meyer's CSS Reset */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
 body {
-    padding-top: 50px;
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+/* End of Eric Meyer's CSS Reset */
+
+body {
+    font: 12px/18px Arial, sans-serif;
+}
+.wrapper {
+    width: 100%;
+    min-width: 1000px;
 }
 
 
-/*
- * Global add-ons
- */
-
-.sub-header {
-    padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
+/* Header
+-----------------------------------------------------------------------------*/
+.header {
+    height: 150px;
+    background: #FFE680;
 }
 
 
-/*
- * Sidebar
- */
-
-/* Hide for mobile, show later */
-.sidebar {
-    display: none;
+/* Middle
+-----------------------------------------------------------------------------*/
+.middle {
+    width: 100%;
+    position: relative;
 }
-@media (min-width: 768px) {
-    .sidebar {
-        position: fixed;
-        top: 51px;
-        bottom: 0;
-        left: 0;
-        z-index: 1000;
-        display: block;
-        padding: 20px;
-        overflow-x: hidden;
-        overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-        background-color: #f5f5f5;
-        border-right: 1px solid #eee;
-    }
+.middle:after {
+    display: table;
+    clear: both;
+    content: '';
 }
-
-/* Sidebar navigation */
-.nav-sidebar {
-    margin-right: -21px; /* 20px padding + 1px border */
-    margin-bottom: 20px;
-    margin-left: -20px;
-    font-size: 24px;
+.container {
+    width: 100%;
+    float: left;
+    overflow: hidden;
 }
-.nav-sidebar > li > a {
-    padding-right: 20px;
-    padding-left: 20px;
-}
-.nav-sidebar > .active > a {
-    color: #fff;
-    background-color: #428bca;
+.content {
+    padding: 0 0 0 270px;
 }
 
 
-/*
- * Main content
- */
-
-.main {
-    padding: 20px;
-}
-@media (min-width: 768px) {
-    .main {
-        padding-right: 40px;
-        padding-left: 40px;
-    }
-}
-.main .page-header {
-    margin-top: 0;
+/* Left Sidebar
+-----------------------------------------------------------------------------*/
+.left-sidebar {
+    float: left;
+    width: 250px;
+    margin-left: -100%;
+    position: relative;
+    background: #B5E3FF;
 }
 
 
-/*
- * Placeholder dashboard ideas
- */
-
-.placeholders {
-    margin-bottom: 30px;
-    text-align: center;
+/* Footer
+-----------------------------------------------------------------------------*/
+.footer {
+    height: 100px;
+    background: #BFF08E;
 }
-.placeholders h4 {
-    margin-bottom: 0;
-}
-.placeholder {
-    margin-bottom: 20px;
-}
-.placeholder img {
-    display: inline-block;
-    border-radius: 50%;
-}
-

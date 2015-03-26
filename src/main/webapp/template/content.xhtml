@@ -3,16 +3,13 @@
       xmlns:p="http://primefaces.org/ui">
 
 <ui:composition>
-    <p:growl id="msgs" showDetail="true"/>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-3 col-md-2 sidebar">
+    <div class="ui-grid">
+            <div class="ui-grid-col-2">
                 <ui:include src="leftMenu.xhtml" />
             </div>
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="ui-grid-col-10 ui-widget ui-widget-content">
                 <ui:insert name="content" />
             </div>
-        </div>
     </div>
 </ui:composition>
 </html>
