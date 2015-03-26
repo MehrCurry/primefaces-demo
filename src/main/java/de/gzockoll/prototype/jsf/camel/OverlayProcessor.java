@@ -28,15 +28,16 @@ public class OverlayProcessor implements Processor {
     @Override
     public void process(Exchange exchange) throws Exception {
         ByteArrayOutputStream data=exchange.getIn().getBody(ByteArrayOutputStream.class);
-
-        PDDocument inputDocument=PDDocument.load(new ByteArrayInputStream(data.toByteArray()));
         final byte[] stationeryData = assetRepository.findOne((Long) exchange.getIn().getHeader("stationeryId")).getData();
-        PDDocument stationery=PDDocument.load(new ByteArrayInputStream(stationeryData));
 
-        PDDocument result = overlay(inputDocument, stationery);
-        ByteArrayOutputStream bytes=new ByteArrayOutputStream();
-        result.save(bytes);
-        exchange.getIn().setBody(bytes.toByteArray());
+        try (   PDDocument inputDocument=PDDocument.load(new ByteArrayInputStream(data.toByteArray()));
+                PDDocument stationery=PDDocument.load(new ByteArrayInputStream(stationeryData));
+                PDDocument result = overlay(inputDocument, stationery);)
+        {
+            ByteArrayOutputStream bytes=new ByteArrayOutputStream();
+            result.save(bytes);
+            exchange.getIn().setBody(bytes.toByteArray());
+        }
     }
 
     PDDocument overlay(PDDocument inputDocument, PDDocument stationery) throws IOException, COSVisitorException {
@@ -48,7 +49,7 @@ public class OverlayProcessor implements Processor {
         List<PDPage> pages = stationery.getDocumentCatalog().getAllPages();
         pages.forEach(p -> {
             System.out.println("Orientation: " + p.findRotation());
-            p.setRotation(0);
+            p.setRotation(180);
         });
         int pageCount=stationery.getNumberOfPages();
 
