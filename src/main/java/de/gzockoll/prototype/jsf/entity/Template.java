@@ -1,12 +1,18 @@
 package de.gzockoll.prototype.jsf.entity;
 
 import com.google.common.collect.ImmutableMap;
+import com.hazelcast.config.Config;
+import com.hazelcast.core.Hazelcast;
+import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.ITopic;
 import de.gzockoll.prototype.jsf.validation.PDFDocument;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.camel.EndpointInject;
 import org.apache.camel.ProducerTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Entity;
 import javax.persistence.Lob;
@@ -27,6 +33,12 @@ import static java.lang.Integer.min;
 @Getter
 public class Template extends AbstractEntity {
     public static String DATA;
+
+    @Autowired
+    private transient HazelcastInstance hazelcast;
+
+    @Autowired
+    private transient TemplateRepository repository;
 
     static {
         try {
@@ -54,10 +66,10 @@ public class Template extends AbstractEntity {
     @Getter
     private Asset stationery;
 
-    public Template() {
+    Template() {
     }
 
-    public Template(TemplateGroup group, String isoCode) {
+    Template(TemplateGroup group, String isoCode) {
         checkArgument(group != null);
         checkArgument(isoCode != null);
 
@@ -99,7 +111,13 @@ public class Template extends AbstractEntity {
     public Template requestApproval() {
         checkState(assetsPresent());
         state = state.requestApproval();
+        topic().publish(new TemplateApprovalRequestedEvent(getId()));
         return this;
+    }
+
+    private ITopic topic() {
+        checkState(hazelcast != null);
+        return hazelcast.getTopic("template");
     }
 
     private boolean assetsPresent() {
@@ -113,6 +131,7 @@ public class Template extends AbstractEntity {
     public Template approve() {
         checkState(assetsPresent());
         state = state.approve();
+        topic().publish(new TemplateApprovedEvent(getId()));
         return this;
     }
 
@@ -139,7 +158,9 @@ public class Template extends AbstractEntity {
 
     public byte[] generate(ProducerTemplate producer, String data) {
         checkState(isApproved(), "This template is not approved for document generation");
-        return preview(producer, data);
+        byte[] bytes = preview(producer, data);
+        topic().publish(new InvoiceCreatedEvent(getId(), bytes));
+        return bytes;
     }
 
     public byte[] preview(ProducerTemplate producer, String data) {
@@ -148,7 +169,9 @@ public class Template extends AbstractEntity {
                 .put("stationeryId", getStationery().getId())
                 .put("random", Math.random())
                 .build();
-        return (byte[]) producer.requestBodyAndHeaders(data, headers);
+        byte[] bytes = (byte[]) producer.requestBodyAndHeaders(data, headers);
+        topic().publish(new PreviewCreatedEvent(getId(), bytes));
+        return bytes;
     }
 
     public byte[] preview(ProducerTemplate producer) {
@@ -173,5 +196,15 @@ public class Template extends AbstractEntity {
 
     public boolean belongsTo(TemplateGroup group) {
         return this.group != null && this.group.equals(group);
+    }
+
+    public void save() {
+        checkState(repository!=null);
+        repository.save(this);
+    }
+
+    public void delete() {
+        checkState(repository!=null);
+        repository.delete(this);
     }
 }

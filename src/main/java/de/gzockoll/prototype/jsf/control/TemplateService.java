@@ -84,12 +84,13 @@ public class TemplateService {
         return repository.findAll();
     }
 
-    public Template save(Template bean) {
-        return repository.save(bean);
+    public Template save(Template t) {
+        t.save();
+        return t;
     }
 
     public void delete(Template t) {
-        repository.delete(t);
+        t.delete();
     }
 
     public Collection<Template> findAll() {

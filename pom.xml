@@ -105,6 +105,11 @@
             <version>[1.7.1,)</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast</artifactId>
+            <version>3.4.2</version>
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -139,6 +144,11 @@
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-exec</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-hazelcast</artifactId>
             <version>${camel.version}</version>
         </dependency>
         <dependency>

@@ -6,13 +6,14 @@ import lombok.Getter;
 import lombok.ToString;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.util.Locale;
 
 @Embeddable
 @EqualsAndHashCode(callSuper = false)
 @Getter
 @ToString
-public class LanguageCode extends ValidateableObject {
+public class LanguageCode extends ValidateableObject implements Serializable {
     @ValidISOLanguageCode
     private String code;
 

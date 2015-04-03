@@ -1,10 +1,7 @@
 package de.gzockoll.prototype.jsf.ui.beans;
 
 import de.gzockoll.prototype.jsf.control.TemplateService;
-import de.gzockoll.prototype.jsf.entity.Asset;
-import de.gzockoll.prototype.jsf.entity.AssetRepository;
-import de.gzockoll.prototype.jsf.entity.Template;
-import de.gzockoll.prototype.jsf.entity.TemplateGroup;
+import de.gzockoll.prototype.jsf.entity.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.component.datatable.DataTable;
@@ -13,6 +10,7 @@ import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.DefaultStreamedContent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.ManagedBean;
@@ -33,6 +31,9 @@ public class TemplatesBean extends AbstractBean {
 
     @Inject
     private TemplateService service;
+
+    @Autowired
+    private TemplateFactory entityFactory;
 
     @Inject
     private AssetRepository assets;
@@ -67,7 +68,7 @@ public class TemplatesBean extends AbstractBean {
 
     @PostConstruct
     public void init() {
-        element = new Template();
+        element = entityFactory.createInstance();
         templates = service.findAll();
     }
 
@@ -123,6 +124,16 @@ public class TemplatesBean extends AbstractBean {
         }
     }
 
+    public void generate() {
+        if (selected != null) {
+            try {
+                service.generate(selected);
+            } catch (Exception e) {
+                handleException(e);
+            }
+        }
+    }
+
     public DefaultStreamedContent getMedia() {
         return media;
     }
@@ -148,7 +159,7 @@ public class TemplatesBean extends AbstractBean {
     }
 
     public void onRowUnselect(UnselectEvent event) {
-        element = new Template();
+        element = entityFactory.createInstance();
     }
 
     public Collection<TemplateGroup> getGroups() {
@@ -156,7 +167,7 @@ public class TemplatesBean extends AbstractBean {
     }
 
     public void neu() {
-        element = new Template();
+        element = entityFactory.createInstance();
     }
 
     public void showDialog() {

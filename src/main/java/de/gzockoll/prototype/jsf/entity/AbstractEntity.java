@@ -3,11 +3,12 @@ package de.gzockoll.prototype.jsf.entity;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @MappedSuperclass
 @Getter
-public abstract class AbstractEntity extends ValidateableObject {
+public abstract class AbstractEntity extends ValidateableObject implements Serializable {
 
     @Id
     @GeneratedValue

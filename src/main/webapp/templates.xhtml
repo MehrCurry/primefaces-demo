@@ -52,6 +52,9 @@
                     </p:panel>
                     <p:outputPanel id="list">
                         <p:contextMenu for="templates">
+                            <p:menuitem value="Generate" icon="fa fa-file-pdf-o"
+                                        action="#{templatesBean.generate}"
+                                        update=":pages"/>
                             <p:menuitem value="Preview" icon="fa fa-file-pdf-o"
                                         action="#{templatesBean.previewTemplate}"
                                         update=":pages"/>
