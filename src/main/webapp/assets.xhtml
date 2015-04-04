@@ -14,6 +14,11 @@
                                 action="#{assetBean.init}"/>
                     <p:menuitem value="Delete" update="assets" icon="fa fa-remove"
                                 action="#{assetBean.deleteAsset}"/>
+                    <p:menuitem value="Download" icon="fa fa-download" ajax="false">
+                        <p:fileDownload value="#{assetBean.download}" />
+                    </p:menuitem>
+
+
                 </p:contextMenu>
 
                 <p:dataTable id="assets" var="asset" value="#{assetBean.assets}"
