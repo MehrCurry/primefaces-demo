@@ -1,4 +1,4 @@
-package de.gzockoll.prototype.jsf.ui.beans;
+package de.gzockoll.prototype.jsf.boundary.ui.beans;
 
 import de.gzockoll.prototype.jsf.control.AssetService;
 import de.gzockoll.prototype.jsf.entity.Asset;
@@ -17,7 +17,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkState;

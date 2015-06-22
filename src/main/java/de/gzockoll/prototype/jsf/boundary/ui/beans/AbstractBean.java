@@ -1,4 +1,4 @@
-package de.gzockoll.prototype.jsf.ui.beans;
+package de.gzockoll.prototype.jsf.boundary.ui.beans;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;

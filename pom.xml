@@ -26,6 +26,7 @@
         <camel.version>[2.15.0,)</camel.version>
         <pdfbox.version>[1.8.8,)</pdfbox.version>
         <primefaces.version>[5.1,)</primefaces.version>
+        <primefaces-extensions.version>[3.0.0,)</primefaces-extensions.version>
     </properties>
 
     <dependencies>
@@ -153,7 +154,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
-            <artifactId>camel-spring-javaconfig</artifactId>
+            <artifactId>camel-spring-boot</artifactId>
             <version>${camel.version}</version>
         </dependency>
         <dependency>
@@ -180,7 +181,7 @@
         <dependency>
             <groupId>org.primefaces.extensions</groupId>
             <artifactId>primefaces-extensions</artifactId>
-            <version>[3.0.0,)</version>
+            <version>${primefaces-extensions.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

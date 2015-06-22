@@ -1,4 +1,4 @@
-package de.gzockoll.prototype.jsf.converter;
+package de.gzockoll.prototype.jsf.boundary.ui.converter;
 
 import de.gzockoll.prototype.jsf.entity.LanguageCode;
 import org.springframework.stereotype.Component;
