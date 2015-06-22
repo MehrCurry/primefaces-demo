@@ -1,4 +1,4 @@
-package de.gzockoll.prototype.jsf.ui.beans;
+package de.gzockoll.prototype.jsf.boundary.ui.beans;
 
 import de.gzockoll.prototype.jsf.control.AssetService;
 import de.gzockoll.prototype.jsf.entity.Asset;

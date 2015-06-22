@@ -1,4 +1,4 @@
-package de.gzockoll.prototype.jsf.control;
+package de.gzockoll.prototype.jsf.boundary.rest;
 
 import com.google.common.base.Preconditions;
 import de.gzockoll.prototype.jsf.entity.Asset;
