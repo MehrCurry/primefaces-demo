@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.springframework.stereotype.Component;
 
@@ -32,8 +33,13 @@ public class AssetBean {
 
     private Collection<Asset> assets=null;
 
-    public void upload() {
-        Asset asset=new Asset(file.getContents(),file.getFileName());
+    public void handleFileUpload(FileUploadEvent event) {
+        FacesMessage message = new FacesMessage("Successful", event.getFile().getFileName() + " is uploaded.");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    public void upload(FileUploadEvent event) {
+        Asset asset=new Asset(event.getFile().getContents(),event.getFile().getFileName());
         service.save(asset);
     }
 
@@ -50,8 +56,7 @@ public class AssetBean {
     }
 
     public Collection<Asset> getAssets() {
-        if (assets==null)
-            assets=service.findAll();
+        assets=service.findAll();
         return assets;
     }
 }

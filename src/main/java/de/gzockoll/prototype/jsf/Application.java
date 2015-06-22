@@ -2,10 +2,8 @@ package de.gzockoll.prototype.jsf;
 
 import com.sun.faces.config.ConfigureListener;
 import lombok.extern.slf4j.Slf4j;
-import org.primefaces.webapp.filter.FileUploadFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.boot.context.embedded.ServletListenerRegistrationBean;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
@@ -59,6 +57,7 @@ public class Application extends SpringBootServletInitializer implements Servlet
         servletContext.setInitParameter("com.sun.faces.forceLoadConfiguration", Boolean.TRUE.toString());
     }
 
+    /*
     @Bean
     public FilterRegistrationBean uploadFilter() {
         FilterRegistrationBean bean=new FilterRegistrationBean();
@@ -68,4 +67,5 @@ public class Application extends SpringBootServletInitializer implements Servlet
         bean.setOrder(1);
         return bean;
     }
+    */
 }
