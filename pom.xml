@@ -90,11 +90,6 @@
             <artifactId>tomcat-embed-jasper</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.14.4</version>
-        </dependency>
-        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>18.0</version>
@@ -105,11 +100,10 @@
             <version>[1.7.1,)</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>[1.14.4,)</version>
+            <version>[1.16.0,)</version>
         </dependency>
         <dependency>
             <groupId>org.apache.tika</groupId>
@@ -178,7 +172,7 @@
                     <dependency>
                         <groupId>org.springframework</groupId>
                         <artifactId>springloaded</artifactId>
-                        <version>1.2.0.RELEASE</version>
+                        <version>1.2.3.RELEASE</version>
                     </dependency>
                 </dependencies>
             </plugin>
