@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.event.service.spi.EventListenerRegistry;
 import org.hibernate.event.spi.EventType;
 import org.hibernate.event.spi.PostLoadEventListener;
-import org.hibernate.event.spi.PreInsertEventListener;
 import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.jpa.HibernateEntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

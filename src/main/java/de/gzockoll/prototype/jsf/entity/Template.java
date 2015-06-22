@@ -1,8 +1,6 @@
 package de.gzockoll.prototype.jsf.entity;
 
 import com.google.common.collect.ImmutableMap;
-import com.hazelcast.config.Config;
-import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.ITopic;
 import de.gzockoll.prototype.jsf.validation.PDFDocument;
@@ -10,7 +8,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.apache.camel.EndpointInject;
 import org.apache.camel.ProducerTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 

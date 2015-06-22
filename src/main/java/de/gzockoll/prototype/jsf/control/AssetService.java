@@ -1,8 +1,6 @@
 package de.gzockoll.prototype.jsf.control;
 
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.Message;
-import com.hazelcast.core.MessageListener;
 import de.gzockoll.prototype.jsf.entity.Asset;
 import de.gzockoll.prototype.jsf.entity.AssetRepository;
 import de.gzockoll.prototype.jsf.entity.InvoiceCreatedEvent;
@@ -12,8 +10,6 @@ import org.springframework.stereotype.Controller;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
-import java.io.Serializable;
-import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
 import java.util.UUID;

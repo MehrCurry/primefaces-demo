@@ -1,7 +1,9 @@
 package de.gzockoll.prototype.jsf.control;
 
-import com.google.common.collect.ImmutableMap;
-import de.gzockoll.prototype.jsf.entity.*;
+import de.gzockoll.prototype.jsf.entity.Template;
+import de.gzockoll.prototype.jsf.entity.TemplateGroup;
+import de.gzockoll.prototype.jsf.entity.TemplateGroupRepository;
+import de.gzockoll.prototype.jsf.entity.TemplateRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.ProducerTemplate;
@@ -16,13 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.transaction.Transactional;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Collection;
-import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -61,29 +57,6 @@ public class TemplateService {
         return t.preview(producer);
     }
 
-    public byte[] preview(String xslt, Asset stationery) {
-        Path tmpFile = null;
-        try {
-            String data = new String(Files.readAllBytes(Paths.get("camel/vorlage/long-dataset.xml")), Charset.forName("UTF-8"));
-            tmpFile = Files.createTempFile("tm", ".xslt");
-            Files.write(tmpFile, xslt.getBytes());
-            final Map<String, Object> headers = ImmutableMap.<String, Object>builder()
-                    .put("tmpFile", tmpFile.toFile().getCanonicalPath())
-                    .put("stationeryId", stationery.getId())
-                    .build();
-            return (byte[]) previewProducer.requestBodyAndHeaders(data, headers);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (tmpFile != null)
-                tmpFile.toFile().delete();
-        }
-    }
-
-    public Collection<? extends Template> findAllTemplates() {
-        return repository.findAll();
-    }
-
     public Template save(Template t) {
         t.save();
         return t;
@@ -97,6 +70,7 @@ public class TemplateService {
         return repository.findAll();
     }
 
+    // TODO: create REST server class
     @RequestMapping(value = "/template/{id}/transform", method = RequestMethod.GET)
     public ResponseEntity<String> sendDocument(@PathVariable(value = "id") Long id) {
         final Template template = repository.findOne(id);
