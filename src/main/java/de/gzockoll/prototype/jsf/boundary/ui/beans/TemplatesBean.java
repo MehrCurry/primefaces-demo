@@ -127,7 +127,8 @@ public class TemplatesBean extends AbstractBean {
     public void generate() {
         if (selected != null) {
             try {
-                service.generate(selected);
+                byte[] data = service.generate(selected);
+                media = new DefaultStreamedContent(new ByteArrayInputStream(data), "application/pdf");
             } catch (Exception e) {
                 handleException(e);
             }
