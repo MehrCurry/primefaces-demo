@@ -26,6 +26,7 @@
         <camel.version>2.15.2</camel.version>
         <pdfbox.version>1.8.9</pdfbox.version>
         <primefaces.version>5.2</primefaces.version>
+        <primefaces-extensions.version>3.2.0</primefaces-extensions.version>
     </properties>
 
     <dependencies>
@@ -159,7 +160,7 @@
         <dependency>
             <groupId>org.primefaces.extensions</groupId>
             <artifactId>primefaces-extensions</artifactId>
-            <version>3.0.0</version>
+            <version>${primefaces-extensions.version}</version>
         </dependency>
     </dependencies>
 
